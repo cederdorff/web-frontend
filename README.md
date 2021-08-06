@@ -1,4 +1,4 @@
 # web-frontend
 Git Repo for Frontend Programming, PBA in Web Development
 
-[/race](/race)
+[/web-frontend](/https://cederdorff.github.io/web-frontend)
