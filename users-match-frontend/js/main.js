@@ -8,7 +8,7 @@ const _baseUrl = "http://localhost:3000/users-match-backend/";
  * Fetchs person data from jsonbin
  */
 async function loadUsers() {
-  const url = _baseUrl + "getUsers.php";
+  const url = _baseUrl + "getUsers.php?action=getuserlist";
   const response = await fetch(url);
   const data = await response.json();
   console.log(data);
