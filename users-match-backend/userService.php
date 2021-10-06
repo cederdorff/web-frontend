@@ -1,10 +1,14 @@
 <?php
-    // Includes the user database, generated from JSON
-    include('userData.php');
-
-    // Declare the userSelected variable - used to save the object of the username that was clicked on previous page
+// Read the JSON file from the root folder of the website
+    $jsonFile = file_get_contents("userDatabase.json");
+    
+    if($_GET['action'] == 'getUsers') {
+        echo $jsonFile;
+    } else if($_GET['action'] == 'getMatches'){
+        // Declare the userSelected variable - used to save the object of the username that was clicked on previous page
     $userSelected = "";
-
+    // Decode (convert) the JSON file to an array og objects to be used in PHP 
+    $userDB = json_decode($jsonFile, false);
     // Loops through all the users in the database
     foreach($userDB as $user) {
         // Checks the ID of the selected user, to find the same id in the database. Then saves that user in the variable
@@ -36,4 +40,5 @@
     ];
     
     echo json_encode($data);
+    }
 ?>

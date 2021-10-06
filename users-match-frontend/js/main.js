@@ -1,6 +1,6 @@
 // ========== GLOBAL VARIABLES ==========
 let _users = [];
-const _baseUrl = "http://localhost:3000/users-match-backend/";
+const _baseUrl = "http://localhost:3000/users-match-backend/userService.php";
 
 // ========== READ ==========
 
@@ -8,7 +8,7 @@ const _baseUrl = "http://localhost:3000/users-match-backend/";
  * Fetchs person data from jsonbin
  */
 async function loadUsers() {
-  const url = _baseUrl + "getUsers.php?action=getuserlist";
+  const url = _baseUrl + "?action=getUsers";
   const response = await fetch(url);
   const data = await response.json();
   console.log(data);
@@ -36,7 +36,7 @@ function appendUsers(users) {
 }
 
 async function getMatches(userId) {
-  const url = `${_baseUrl}getMatches.php?userid=${userId}`;
+  const url = `${_baseUrl}?action=getMatches&userid=${userId}`;
   const response = await fetch(url);
   const data = await response.json();
   return data;
