@@ -4,6 +4,7 @@
  */
 const _routes = {
     "#/": "users",
+    "#/create": "create",
     "#/matches": "matches"
 };
 const _pages = document.querySelectorAll(".page");

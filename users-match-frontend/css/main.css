@@ -229,6 +229,18 @@ input {
   display: block;
 }
 
+/* ---------- custom select styling ---------- */
+select {
+  background-color: var(--green);
+  border: none;
+  color: var(--text-color-light);
+  padding: 1em;
+  margin: 1em auto;
+  max-width: 350px;
+  width: 100%;
+  display: block;
+}
+
 /* ---------- grid container styling ---------- */
 .grid-container {
   display: grid;

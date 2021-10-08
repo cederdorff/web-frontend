@@ -1,7 +1,7 @@
 "use strict"; // to enable strict mode and modern JavaScript functionality
 
 // declaring a variable with a value
-let message = "Hi Web Developers 🙋🏼‍♂️";
+let message = "Hi Students";
 
 // accessing the variable and logging it to the console
 console.log(message);

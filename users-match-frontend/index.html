@@ -15,6 +15,7 @@
   <!-- tabbar navigation -->
   <nav class="tabbar">
     <a href="#/" class="nav-link">Users</a>
+    <a href="#/create" class="nav-link">Create</a>
   </nav>
 
   <!-- pages -->
@@ -23,7 +24,30 @@
     <header class="topbar">
       <h2>Users</h2>
     </header>
-    <div id="grid-users" class="grid-container"></div>
+    <section id="grid-users" class="grid-container"></section>
+  </section>
+
+  <!-- users page -->
+  <section id="create" class="page">
+    <header class="topbar">
+      <h2>Create new user</h2>
+    </header>
+    <section>
+      <form>
+        <input type="text" name="firstname" id="firstnam" placeholder="Firstname">
+        <input type="text" name="lastname" id="lastname" placeholder="Lastname">
+        <input type="number" name="age" id="age" placeholder="Age">
+        <input type="text" name="haircolor" placeholder="Hair Color">
+        <input type="text" name="country" id="country" placeholder="Country">
+        <select name="gender" id="gender" required>
+          <option selected disabled>Select gender</option>
+          <option>Male</option>
+          <option>Female</option>
+        </select>
+        <button type="button"
+          onclick="saveUser(firstname.value, lastname.value, age.value, haircolor.value, country.value, gender.value)">Save</button>
+      </form>
+    </section>
   </section>
 
   <!-- create user page -->
@@ -32,13 +56,13 @@
       <a href="#/" class="nav-link left">Back</a>
       <h2>Matches</h2>
     </header>
-    <div id="grid-matches" class="grid-container"></div>
+    <section id="grid-matches" class="grid-container"></section>
   </section>
 
   <!-- loader  -->
-  <div id="loader">
-    <div class="spinner"></div>
-  </div>
+  <section id="loader">
+    <section class="spinner"></section>
+  </section>
 
   <!-- Router functionality  -->
   <script src="js/router.js"></script>

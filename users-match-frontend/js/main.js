@@ -69,6 +69,28 @@ function appendMatches(data) {
   showLoader(false);
 }
 
+// ========== CREATE ==========
+async function saveUser(firstname, lastname, age, haircolor, country, gender) {
+  const id = Date.now() + ""; // dummy generated user id
+  const newUser = {
+    id, firstname, lastname, age, haircolor, country, gender
+  };
+  console.log(newUser);
+
+  // put users array to php service
+  const response = await fetch(_baseUrl + "?action=createUser", {
+    method: "POST",
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+    body: JSON.stringify(newUser)
+  });
+  // waiting for the result
+  const result = await response.json(); // the new updated users array from jsonbin
+  console.log(result);
+
+}
+
+
+
 
 // ========== Loader ==========
 /**
