@@ -12,7 +12,6 @@
     } else if($_GET['action'] == 'getMatches'){
         // Declare the userSelected variable - used to save the object of the username that was clicked on previous page
     $userSelected = "";
-    // Decode (convert) the JSON file to an array og objects to be used in PHP 
    
     // Loops through all the users in the database
     foreach($users as $user) {
@@ -53,6 +52,6 @@
         $fp = fopen('users.json', 'w');
         fwrite($fp, $encoded);
         fclose($fp);
-        echo $newUser;
+        echo $encoded;
     }
 ?>

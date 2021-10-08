@@ -86,11 +86,9 @@ async function saveUser(firstname, lastname, age, haircolor, country, gender) {
   // waiting for the result
   const result = await response.json(); // the new updated users array from jsonbin
   console.log(result);
-
+  appendUsers(result);
+  navigateTo("#/");
 }
-
-
-
 
 // ========== Loader ==========
 /**

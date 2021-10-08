@@ -246,7 +246,7 @@ select {
   display: grid;
   grid-template-columns: 1fr;
   padding: 1em;
-  gap: 1em;
+  gap: 2em;
 }
 
 @media (min-width: 600px) {
