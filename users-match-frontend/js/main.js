@@ -62,6 +62,7 @@ function appendMatches(data) {
         <button type="button" class="delete" onclick="deleteUser(${data.selectedUser.id})">Delete</button>
     </article>
   `;
+
   for (const user of data.matches) {
     htmlTemplate += /*html*/ `
       <article onclick="showUser(${user.id})">
@@ -71,6 +72,7 @@ function appendMatches(data) {
       `;
   }
   document.querySelector("#grid-matches").innerHTML = htmlTemplate;
+  document.querySelector("#user .title").innerHTML = data.selectedUser.firstname;
   showLoader(false);
 }
 
