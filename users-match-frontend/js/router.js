@@ -5,7 +5,8 @@
 const _routes = {
     "#/": "users",
     "#/create": "create",
-    "#/matches": "matches"
+    "#/user": "user",
+    "#/update": "update"
 };
 const _pages = document.querySelectorAll(".page");
 const _basePath = location.pathname.replace("index.html", ""); // remove index.html from path
@@ -24,6 +25,7 @@ function hideAllPages() {
  * Navigating SPA to specific page by given path
  */
 function navigateTo(path) {
+    console.log(path);
     window.history.pushState({}, path, _basePath + path);
     showPage(path);
 }

@@ -4,12 +4,11 @@
   --green-opacity: rgba(38, 76, 89, 0.2);
   --light-green: rgb(172, 198, 201);
   --light-grey: #f1f1f4;
+  --danger: rgb(140, 56, 56);
   --text-color-light: #f1f1f1;
   --text-color-dark: #333;
   --white: #fff;
   --font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --text-color-out-of-stock: rgb(89, 38, 38);
-  --text-color-in-stock: rgb(172, 198, 201);
 }
 
 /* ---------- general styling ---------- */
@@ -40,6 +39,10 @@ h3 {
 img {
   width: 100%;
   height: auto;
+}
+
+a {
+  cursor: pointer;
 }
 
 /* ---------- topbar styling ---------- */
@@ -193,7 +196,7 @@ form {
   padding: 2em 1em 2.5em;
 }
 
-form button {
+button {
   font-weight: 200;
   text-align: center;
   cursor: pointer;
@@ -218,6 +221,20 @@ article button {
   background-color: var(--green);
   width: 40%;
   text-transform: uppercase;
+}
+
+button.delete {
+  color: var(--text-color-light);
+  background-color: var(--danger);
+  margin: 0.1em 1em;
+  max-width: 200px;
+}
+
+button.update {
+  color: var(--text-color-dark);
+  background-color: var(--light-green);
+  margin: 0.1em 1em;
+  max-width: 200px;
 }
 
 input {

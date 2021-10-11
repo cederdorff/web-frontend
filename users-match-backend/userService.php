@@ -29,8 +29,10 @@
         $minAge = $user->age - $ageRange;
         $maxAge = $user->age + $ageRange;
         $gender = $user->gender;
+        $lookingFor = $user->lookingFor;
+        $id = $user->id;
 
-        if($userSelected->age >= $minAge && $userSelected->age <= $maxAge && $userSelected->gender != $gender) {
+        if($userSelected->age >= $minAge && $userSelected->age <= $maxAge && $userSelected->lookingFor == $gender && $lookingFor == $userSelected->gender && $id !=$userSelected->id) {
             // Add 1 to the match count. Used to display how many matches was found
             $matchCount++;
             array_push($matches, $user);
@@ -49,6 +51,39 @@
         $newUser = json_decode(file_get_contents("php://input"));
         array_push($users, $newUser);
         $encoded = json_encode($users);
+        $fp = fopen('users.json', 'w');
+        fwrite($fp, $encoded);
+        fclose($fp);
+        echo $encoded;
+
+    } else if($_GET['action'] == 'updateUser'){
+        $userToupdate = json_decode(file_get_contents("php://input"));
+        
+        foreach ( $users as $user ) {
+            if ( $user->id == $userToupdate->id ) {
+                $user->firstname = $userToupdate->firstname;
+                $user->lastname = $userToupdate->lastname;
+                $user->age = $userToupdate->age;
+                $user->haircolor = $userToupdate->haircolor;
+                $user->countryName = $userToupdate->countryName;
+                $user->gender = $userToupdate->gender;
+                $user->lookingFor = $userToupdate->lookingFor;
+                $encoded = json_encode($users);
+                $fp = fopen('users.json', 'w');
+                fwrite($fp, $encoded);
+                fclose($fp);
+                echo $encoded;
+            }
+        }
+        
+    } else if($_GET['action'] == 'deleteUser'){
+        $newUsersArray = [];
+        foreach ( $users as $user ) {
+            if ( $user->id != $_GET['userid']) {
+                array_push($newUsersArray, $user);
+            }
+        }
+        $encoded = json_encode($newUsersArray);
         $fp = fopen('users.json', 'w');
         fwrite($fp, $encoded);
         fclose($fp);

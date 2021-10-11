@@ -6,7 +6,8 @@
         "age": "34",
         "haircolor": "Dark Blonde",
         "countryName": "Denmark",
-        "gender": "Male"
+        "gender": "Male",
+        "lookingFor": "Female"
     },
     {
         "id": "2",
@@ -15,7 +16,8 @@
         "age": "22",
         "haircolor": "Brown",
         "countryName": "Denmark",
-        "gender": "Male"
+        "gender": "Male",
+        "lookingFor": "Female"
     },
     {
         "id": "3",
@@ -24,7 +26,8 @@
         "age": "34",
         "haircolor": "Blonde",
         "countryName": "Denmark",
-        "gender": "Female"
+        "gender": "Female",
+        "lookingFor": "Male"
     },
     {
         "id": "4",
@@ -33,7 +36,8 @@
         "age": "23",
         "haircolor": "Blonde",
         "countryName": "Italy",
-        "gender": "Male"
+        "gender": "Male",
+        "lookingFor": "Female"
     },
     {
         "id": "5",
@@ -42,7 +46,8 @@
         "age": "20",
         "haircolor": "Blonde",
         "countryName": "Poland",
-        "gender": "Male"
+        "gender": "Male",
+        "lookingFor": "Female"
     },
     {
         "id": "7",
@@ -51,7 +56,8 @@
         "age": "25",
         "haircolor": "Light",
         "countryName": "Slovenia",
-        "gender": "Female"
+        "gender": "Female",
+        "lookingFor": "Male"
     },
     {
         "id": "8",
@@ -60,7 +66,8 @@
         "age": "27",
         "haircolor": "Dark",
         "countryName": "France",
-        "gender": "Male"
+        "gender": "Male",
+        "lookingFor": "Female"
     },
     {
         "id": "9",
@@ -69,7 +76,8 @@
         "age": "28",
         "haircolor": "Dark",
         "countryName": "Poland",
-        "gender": "Male"
+        "gender": "Male",
+        "lookingFor": "Female"
     },
     {
         "id": "10",
@@ -78,16 +86,18 @@
         "age": "23",
         "haircolor": "Blonde",
         "countryName": "Poland",
-        "gender": "Female"
+        "gender": "Female",
+        "lookingFor": "Male"
     },
     {
         "id": "13",
         "firstname": "Barbora",
-        "lastname": "Byetusová",
+        "lastname": "Byetusov\u00e1",
         "age": "24",
         "haircolor": "Dark",
         "countryName": "Czech Republic",
-        "gender": "Female"
+        "gender": "Female",
+        "lookingFor": "Male"
     },
     {
         "id": "14",
@@ -96,6 +106,57 @@
         "age": "21",
         "haircolor": "Dark",
         "countryName": "Denmark",
-        "gender": "Female"
+        "gender": "Female",
+        "lookingFor": "Male"
+    },
+    {
+        "id": "1633934203898",
+        "firstname": "Rasmus",
+        "lastname": "Cederdorff",
+        "age": "31",
+        "haircolor": "Blonde",
+        "country": "Denmark",
+        "gender": "Male",
+        "lookingFor": "Male"
+    },
+    {
+        "id": "1633935071702",
+        "firstname": "Matias",
+        "lastname": "Vase",
+        "age": "29",
+        "haircolor": "Brown",
+        "country": "Denmark",
+        "gender": "Male",
+        "lookingFor": "Male"
+    },
+    {
+        "id": "1633935623764",
+        "firstname": "Peter",
+        "lastname": "Hansen",
+        "age": "30",
+        "haircolor": "Blonde",
+        "country": "Denmark",
+        "gender": "Male",
+        "lookingFor": "Male"
+    },
+    {
+        "id": 1633935928357,
+        "firstname": "Jane",
+        "lastname": "Doe",
+        "age": "25",
+        "haircolor": "Blonde",
+        "country": "Denmark",
+        "gender": "Female",
+        "lookingFor": "Female"
+    },
+    {
+        "id": 1633935953386,
+        "firstname": "Gitte",
+        "lastname": "Hansen",
+        "age": "27",
+        "haircolor": "Brown",
+        "country": "Denmark",
+        "gender": "Female",
+        "lookingFor": "Female"
     }
 ]
