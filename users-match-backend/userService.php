@@ -25,7 +25,7 @@
     $matchCount = 0;
     $matches = [];
     foreach($users as $user) {
-        $ageRange = 2;
+        $ageRange = 4;
         $minAge = $user->age - $ageRange;
         $maxAge = $user->age + $ageRange;
         $gender = $user->gender;
