@@ -177,8 +177,8 @@ function showLoader(show) {
 }
 
 // ========== INIT APP ==========
-function init() {
-  loadUsers();
+async function init() {
+  await loadUsers();
   _selectedUserId = localStorage.getItem("selectedUserId");
   if (_selectedUserId && location.hash === "#/user") {
     showUser(_selectedUserId);
