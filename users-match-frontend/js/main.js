@@ -45,6 +45,7 @@ async function getMatches(userId) {
 
 async function showUser(userId) {
   _selectedUserId = userId;
+  localStorage.setItem("selectedUserId", _selectedUserId);
   const matchData = await getMatches(userId);
   console.log(matchData);
   appendMatches(matchData);
@@ -178,7 +179,10 @@ function showLoader(show) {
 // ========== INIT APP ==========
 function init() {
   loadUsers();
-
+  _selectedUserId = localStorage.getItem("selectedUserId");
+  if (_selectedUserId && location.hash === "#/user") {
+    showUser(_selectedUserId);
+  }
 }
 
 init();
