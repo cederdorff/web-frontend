@@ -25,7 +25,6 @@ function hideAllPages() {
  * Navigating SPA to specific page by given path
  */
 function navigateTo(path) {
-    console.log(path);
     window.history.pushState({}, path, _basePath + path);
     showPage(path);
 }
