@@ -21,7 +21,6 @@
         }
     }
     
-
     $matchCount = 0;
     $matches = [];
     foreach($users as $user) {
