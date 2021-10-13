@@ -20,9 +20,6 @@ async function fetchUsers() {
     _users = data;
 }
 
-
-
-
 function appendUsers(usersArray) {
     let html = "";
     for (const userObject of usersArray) {
