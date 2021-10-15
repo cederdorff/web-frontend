@@ -19,12 +19,19 @@ body {
   padding: 0;
   border: 0;
   outline: 0;
+  background-color: var(--light-grey);
 }
 
 h1 {
   font-size: 2em;
   font-weight: 400;
   letter-spacing: 3px;
+}
+
+h2 {
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  margin: 0.2em 0;
 }
 
 h3 {
@@ -36,6 +43,10 @@ h3 {
 img {
   width: 100%;
   height: auto;
+}
+
+a {
+  color: var(--green);
 }
 
 /* ---------- grid styling ---------- */
@@ -64,7 +75,6 @@ img {
   padding: 2em 1em;
   background-color: var(--light-green);
   transition: 0.3s;
-  cursor: pointer;
 }
 
 .grid > article:hover {
@@ -73,7 +83,7 @@ img {
 
 .grid > article img {
   width: 100%;
-  max-width: 200px;
+  max-width: 150px;
   height: auto;
   border-radius: 50%;
 }

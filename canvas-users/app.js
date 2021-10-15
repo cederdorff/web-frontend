@@ -16,7 +16,7 @@ function appendUsers(users) {
                 <img src="${user.avatar_url}">
                 <h2>${user.name}</h2>
                 <a href="mailto:${user.email}">${user.email}</a>
-                <p>Role: ${user.enrollments[0].type}</p>
+                <p>Role: ${user.enrollment_type}</p>
             </article>
         `;
     }
