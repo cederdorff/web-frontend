@@ -1,0 +1,117 @@
+/* ---------- root variables ---------- */
+:root {
+  --green: rgb(38, 76, 89);
+  --green-opacity: rgba(38, 76, 89, 0.2);
+  --light-green: rgb(172, 198, 201);
+  --light-grey: #f1f1f4;
+  --text-color-light: #f1f1f1;
+  --text-color-dark: #333;
+  --white: #fff;
+  --font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* ---------- general styling ---------- */
+html,
+body {
+  color: var(--text-color-dark);
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background-color: var(--light-grey);
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: 400;
+  letter-spacing: 3px;
+}
+
+h2 {
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  margin: 0.2em 0;
+}
+
+h3 {
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin: 0.5em 0 0.2em;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--green);
+}
+
+/* ---------- grid styling ---------- */
+
+/* The grid container */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+/* Style the header */
+header {
+  background-color: var(--green);
+  color: var(--text-color-light);
+  text-align: center;
+  font-size: 2em;
+  height: 30vh;
+  flex-basis: 100%;
+}
+
+.left,
+.middle,
+.right {
+  height: 55vh; /* Should be removed. Only for demonstration */
+}
+
+/* Style the left % right column */
+.left,
+.right {
+  flex-basis: 100%;
+  background-color: var(--light-green);
+}
+
+/* Style the middle column */
+.middle {
+  flex-basis: 100%;
+}
+
+@media (min-width: 600px) {
+  .left,
+  .right {
+    flex-basis: 33.33%;
+  }
+
+  .middle {
+    flex-basis: 33.33%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .left,
+  .right {
+    flex-basis: 20%;
+  }
+  .middle {
+    flex-basis: 60%;
+  }
+}
+
+/* Style the footer */
+footer {
+  text-align: center;
+  background-color: var(--green);
+  color: var(--text-color-light);
+  height: 15vh;
+  flex-basis: 100%;
+}
