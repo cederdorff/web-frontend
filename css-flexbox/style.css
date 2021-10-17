@@ -58,23 +58,24 @@ a {
 }
 
 .flexbox article {
-  width: 90%;
-  margin: 1em 0;
-  padding: 1em 0;
+  margin: 1em;
+  padding: 1em;
   text-align: center;
   background-color: var(--light-green);
   transition: 0.3s;
+  flex-basis: 100%; /*default size of an element before the remaining space is distributed*/
+  flex-grow: 1; /*ability for a flex item to grow. 1 = all items equally*/
 }
 
 @media (min-width: 600px) {
   .flexbox article {
-    width: 45%;
+    flex-basis: 40%;
   }
 }
 
 @media (min-width: 992px) {
   .flexbox article {
-    width: 30%;
+    flex-basis: 27%;
   }
 }
 
