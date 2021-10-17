@@ -51,7 +51,7 @@ a {
 
 /* ---------- grid styling ---------- */
 
-/* The grid container */
+/* The flex container */
 .flex-container {
   display: flex;
   flex-wrap: wrap;
