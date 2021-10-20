@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Products</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Product Single Page Application">
+  <meta name="author" content="Rasmus Cederdorff">
+  <link rel="stylesheet" class="nav-link" href="css/main.css">
+  <link rel="shortcut icon" type="image/png" class="nav-link" href="img/favicon.png" />
+</head>
+
+<body onhashchange=>
+  <!-- tabbar navigation -->
+  <nav class="tabbar">
+    <a class="nav-link" href="#/products">Products</a>
+    <a class="nav-link" href="#/add">Add Product</a>
+  </nav>
+
+  <!-- pages -->
+  <!-- home page -->
+  <section id="products" class="page">
+    <header class="topbar">
+      <h2>Products</h2>
+    </header>
+    <section class="tools-grid">
+      <label for="sortBy">Order by:
+        <select id="sortBy" onchange="orderBy(this.value)">
+          <option value="" selected disabled>Choose here</option>
+          <option value="brand">Brand</option>
+          <option value="model">Model</option>
+          <option value="price">Price</option>
+        </select>
+      </label>
+      <label for="outOfStock" class="checkmark-container">Show out of stock
+        <input type="checkbox" id="outOfStock" onchange="showHideOfStock(this.checked)" checked>
+        <span class="checkmark"></span>
+      </label>
+      <input type="search" placeholder="Search" onkeyup="search(this.value)" onsearch="search('')">
+    </section>
+    <section id="products-container" class="grid-container"></section>
+  </section>
+
+  <!-- create page -->
+  <section id="add" class="page">
+    <header class="topbar">
+      <h2>Add New Product</h2>
+    </header>
+    <form>
+      <input id="brand" type="text" name="brand" placeholder="Brand">
+      <input id="model" type="text" name="model" placeholder="Model">
+      <input id="price" type="text" name="price" placeholder="Price">
+      <input id="img" type="text" name="img" placeholder="Image URL">
+      <button type="button" name="button" onclick="addNewProduct()">Save</button>
+    </form>
+  </section>
+
+  <!-- edit page -->
+  <section id="edit" class="page">
+    <header class="topbar">
+      <a class="left" class="nav-link" href="#/products">Back</a>
+      <h2>Edit Product</h2>
+    </header>
+    <form>
+      <input id="brandEdit" type="text" name="brand" placeholder="Brand">
+      <input id="modelEdit" type="text" name="model" placeholder="Model">
+      <input id="priceEdit" type="text" name="price" placeholder="Price">
+      <input id="imgEdit" type="text" name="img" placeholder="Image URL">
+      <button type="button" name="button" onclick="saveProduct()">Save</button>
+    </form>
+  </section>
+
+  <!-- edit page -->
+  <section id="detail-view" class="page">
+    <header class="topbar">
+      <a class="left" class="nav-link" href="#/products">Back</a>
+      <h2 class="title">Product</h2>
+    </header>
+    <section id="detail-view-container"></section>
+  </section>
+
+  <!-- loader  -->
+  <section id="loader">
+    <section class="spinner"></section>
+  </section>
+
+
+  <!-- SPA functionality  -->
+  <script src="js/router.js"></script>
+  <!-- main js file -->
+  <script src="js/main.js"></script>
+</body>
+
+</html>
