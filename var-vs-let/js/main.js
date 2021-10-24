@@ -40,3 +40,24 @@ if (true) {
   const programmingLecturer = "RACE";
 }
 // console.log(programmingLecturer);
+
+
+
+
+const myBirthday = "12-03-1990";
+myBirthday = "12-03-1989";
+// Uncaught TypeError: can't reassign the constant!
+
+const person = {
+  name: "Kasper",
+  mail: "kato@eaaa.dk",
+  age: 32
+};
+
+person.age = 33; // no error
+
+person = {
+  name: "Rasmus",
+  mail: "race@eaaa.dk",
+  age: 31
+}; // Uncaught TypeError: can't reassign the constant!
