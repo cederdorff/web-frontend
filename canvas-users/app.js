@@ -3,7 +3,6 @@
 async function getUsers() {
     const response = await fetch("https://cederdorff.github.io/web-frontend/canvas-users/data.json");
     const data = await response.json();
-    console.log(data.slice(0, 5));
     return data;
 }
 
