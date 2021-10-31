@@ -6,13 +6,6 @@ let _selectedUserId;
 
 /* -------------------------------------- */
 
-async function initApp() {
-    await fetchUsers();
-    appendUsers(_users);
-}
-
-initApp();
-
 async function fetchUsers() {
     const url = "https://cederdorff.github.io/mdu-frontend/canvas-users/data/users.json";
     const response = await fetch(url);
@@ -192,3 +185,12 @@ function showRandomUser() {
     console.log(randomUser);
     showDetailView(randomUser.id);
 }
+
+// ========== INIT APP ==========
+
+async function initApp() {
+    await fetchUsers();
+    appendUsers(_users);
+}
+
+initApp();
