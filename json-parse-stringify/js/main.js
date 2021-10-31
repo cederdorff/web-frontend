@@ -1,4 +1,3 @@
-
 const user = {
   name: "John",
   age: 30,
@@ -14,5 +13,3 @@ console.log(jsonUser); // {"name":"John","age":30,"gender":"male","lookingFor":"
 const jsonString = '{"name":"John","age":30,"gender":"male","lookingFor":"female"}';
 const userObject = JSON.parse(jsonString);
 console.log(userObject); // logging userObject
-
-
