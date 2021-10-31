@@ -58,14 +58,20 @@ function appendTeachers(teachers) {
   }
 }
 
+// function search(value) {
+//   value = value.toLowerCase();
+//   let filteredTeachers = [];
+//   for (let teacher of teachers) {
+//     const name = teacher.name.toLowerCase();
+//     if (name.includes(value)) {
+//       filteredTeachers.push(teacher);
+//     }
+//   }
+//   appendTeachers(filteredTeachers);
+// }
+
 function search(value) {
   value = value.toLowerCase();
-  let filteredTeachers = [];
-  for (let teacher of teachers) {
-    let name = teacher.name.toLowerCase();
-    if (name.includes(value)) {
-      filteredTeachers.push(teacher);
-    }
-  }
+  const filteredTeachers = teachers.filter(teacher => teacher.name.toLowerCase().includes(value));
   appendTeachers(filteredTeachers);
 }
