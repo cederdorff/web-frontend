@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>User CRUD SPA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Get started with HTML, CSS and JavaScript">
+  <meta name="author" content="Rasmus Cederdorff">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+</head>
+
+<body>
+  <!-- tabbar navigation -->
+  <nav class="tabbar">
+    <a href="#/" class="nav-link">Users</a>
+    <a href="#/create" class="nav-link">Create</a>
+  </nav>
+
+  <!-- pages -->
+  <!-- users page -->
+  <section id="users" class="page">
+    <header class="topbar">
+      <h2>Users</h2>
+    </header>
+    <section id="grid-users" class="grid-container"></section>
+  </section>
+
+  <!-- users page -->
+  <section id="create" class="page">
+    <header class="topbar">
+      <h2>Create new user</h2>
+    </header>
+    <section>
+      <form>
+        <input type="text" name="firstname" id="firstname" placeholder="Firstname">
+        <input type="text" name="lastname" id="lastname" placeholder="Lastname">
+        <input type="number" name="age" id="age" placeholder="Age">
+        <input type="text" name="haircolor" id="haircolor" placeholder="Hair Color">
+        <input type="text" name="country" id="country" placeholder="Country">
+        <select name="gender" id="gender">
+          <option value="" selected disabled>Select gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Binary">Binary</option>
+        </select>
+        <select name="lookingFor" id="lookingFor">
+          <option value="" selected disabled>Select looking for</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Binary">Binary</option>
+        </select>
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <button type="button" onclick="createUserEvent()">Save</button>
+      </form>
+    </section>
+  </section>
+
+  <!-- create user page -->
+  <section id="user" class="page">
+    <header class="topbar">
+      <a href="#/" class="nav-link left">Back</a>
+      <h2 class="title">User</h2>
+    </header>
+    <section id="grid-matches" class="grid-container"></section>
+  </section>
+
+  <!-- update user page -->
+  <section id="update" class="page">
+    <header class="topbar">
+      <a href="#/user" class="nav-link left">Cancel</a>
+      <h2>Update User</h2>
+    </header>
+    <section>
+      <form>
+        <input type="text" name="firstnameUpdate" id="firstnameUpdate" placeholder="Firstname">
+        <input type="text" name="lastnameUpdate" id="lastnameUpdate" placeholder="Lastname">
+        <input type="number" name="ageUpdate" id="ageUpdate" placeholder="Age">
+        <input type="text" name="haircolorUpdate" id="haircolorUpdate" placeholder="Hair Color">
+        <input type="text" name="countryUpdate" id="countryUpdate" placeholder="Country">
+        <select name="genderUpdate" id="genderUpdate">
+          <option value="" selected disabled>Select gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Binary">Binary</option>
+        </select>
+        <select name="lookingForUpdate" id="lookingForUpdate">
+          <option value="" selected disabled>Select looking for</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Binary">Binary</option>
+        </select>
+        <button type="button"
+          onclick="updateUser(firstnameUpdate.value, lastnameUpdate.value, ageUpdate.value, haircolorUpdate.value, countryUpdate.value, genderUpdate.value, lookingForUpdate.value)">Save</button>
+      </form>
+    </section>
+  </section>
+
+  <!-- loader  -->
+  <section id="loader">
+    <section class="spinner"></section>
+  </section>
+
+  <!-- Router functionality  -->
+  <script src="js/router.js"></script>
+  <!-- main js file -->
+  <script src="js/main.js"></script>
+</body>
+
+</html>
