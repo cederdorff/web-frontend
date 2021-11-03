@@ -56,6 +56,7 @@ async function showUser(userId) {
 function appendMatches(data) {
   let htmlTemplate = /*html*/ `
     <article class="selectedUser">
+      <img src="backend/small/${data.selectedUser.image}">
         <h3>${data.selectedUser.firstname} ${data.selectedUser.lastname}</h3>
         <p>Age: ${data.selectedUser.age}, Gender: ${data.selectedUser.gender}</p>
         <p>Number of matches: ${data.matchCount}</p>
@@ -67,6 +68,7 @@ function appendMatches(data) {
   for (const user of data.matches) {
     htmlTemplate += /*html*/ `
       <article onclick="showUser(${user.id})">
+        <img src="backend/small/${user.image}">
         <h3>${user.firstname} ${user.lastname}</h3>
         <p>Age: ${user.age}, Gender: ${user.gender}</p>
       </article>
