@@ -24,7 +24,7 @@ function appendUsers(users) {
   for (const user of users) {
     htmlTemplate += /*html*/ `
       <article onclick="showUser(${user.id})">
-      <img src="backend/small/${user.image}">
+      <img src="backend/small/${user.image || "placeholder.jpg"}">
         <h3>${user.firstname} ${user.lastname}</h3>
         <p>Age: ${user.age}, Gender: ${user.gender}, Looking for: ${user.lookingFor}</p>
       </article>
