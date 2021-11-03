@@ -159,29 +159,45 @@ function showUserUpdate() {
   navigateTo("#/update");
 }
 
-async function updateUser(firstname, lastname, age, haircolor, countryName, gender, lookingFor) {
-  // form validation - if all inputs have a value
-  if (_selectedUserId && firstname && lastname && age && haircolor && countryName && gender && lookingFor) {
-    const userToUpdate = { // declaring a new js object with the form values
-      id: _selectedUserId, firstname, lastname, age, haircolor, countryName, gender, lookingFor
-    };
-    console.log(userToUpdate);
+async function updateUserEvent() {
+  const firstname = document.querySelector("#firstnameUpdate").value;
+  const lastname = document.querySelector("#lastnameUpdate").value;
+  const age = document.querySelector("#ageUpdate").value;
+  const haircolor = document.querySelector("#haircolorUpdate").value;
+  const countryName = document.querySelector("#countryUpdate").value;
+  const gender = document.querySelector("#genderUpdate").value;
+  const lookingFor = document.querySelector("#lookingForUpdate").value;
+  const imageFile = document.querySelector("#fileToUploadUpdate").files[0];
 
-    // put user to php userService using fetch(...)
-    const response = await fetch(_baseUrl + "?action=updateUser", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: JSON.stringify(userToUpdate) // parsing js object to json object
-    });
-    // waiting for the result
-    const result = await response.json();
-    console.log(result); // the result is the new updated users array
-    _users = result;
-    appendUsers(result); // update the DOM using appendUsers(...)
-    navigateTo("#/"); // navigating back to front page
-  } else { // if all fields aren't filled, display alert
+  if (firstname && lastname && age && haircolor && countryName && gender && lookingFor && imageFile) {
+    const imageResult = await uploadImage(imageFile);
+    if (imageResult.status === "success") {
+      updateUser(firstname, lastname, age, haircolor, countryName, gender, lookingFor, imageResult.data.fileName);
+    }
+  } else {
     alert(" Please fill in all fields.");
   }
+}
+
+async function updateUser(firstname, lastname, age, haircolor, countryName, gender, lookingFor, image) {
+  const userToUpdate = { // declaring a new js object with the form values
+    id: _selectedUserId, firstname, lastname, age, haircolor, countryName, gender, lookingFor, image
+  };
+  console.log(userToUpdate);
+
+  // put user to php userService using fetch(...)
+  const response = await fetch(_baseUrl + "?action=updateUser", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+    body: JSON.stringify(userToUpdate) // parsing js object to json object
+  });
+  // waiting for the result
+  const result = await response.json();
+  console.log(result); // the result is the new updated users array
+  _users = result;
+  appendUsers(result); // update the DOM using appendUsers(...)
+  navigateTo("#/"); // navigating back to front page
+
 }
 
 // ========== Delete ==========

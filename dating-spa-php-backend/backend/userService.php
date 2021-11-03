@@ -64,6 +64,7 @@ if ($_GET['action'] == 'getUsers') {
             $user->countryName = $userToupdate->countryName;
             $user->gender = $userToupdate->gender;
             $user->lookingFor = $userToupdate->lookingFor;
+            $user->image = $userToupdate->image;
             $encoded = json_encode($users);
             $fp = fopen('users.json', 'w');
             fwrite($fp, $encoded);
