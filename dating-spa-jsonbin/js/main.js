@@ -1,4 +1,4 @@
-// ========== GLOBAL VARIABLES ==========
+// ========== Global Variables ==========
 let _users = [];
 let _selectedUserId;
 const _baseUrl = "https://api.jsonbin.io/v3/b/6183bd069548541c29cd8475";
@@ -7,7 +7,9 @@ const _headers = {
   "Content-Type": "application/json"
 };
 
-// ========== READ ==========
+// ===================================================
+// ========== Services and Helper Functions ==========
+
 /**
  * Fetches user data from php backend services 
  */
@@ -22,21 +24,23 @@ async function loadUsers() {
   appendUsers(_users);
 }
 
+
 /**
- * Appends users to the DOM
+ * Updates the data source on jsonbin with a given users arrays
+ * @param {Array} users 
  */
-function appendUsers(users) {
-  let htmlTemplate = "";
-  for (const user of users) {
-    htmlTemplate += /*html*/ `
-      <article onclick="showUserEvent(${user.id})">
-        <h3>${user.firstname} ${user.lastname}</h3>
-        <p>Age: ${user.age}, Gender: ${user.gender}, Looking for: ${user.lookingFor}</p>
-      </article>
-      `;
-  }
-  document.querySelector("#grid-users").innerHTML = htmlTemplate;
-  showLoader(false);
+async function updateJSONBIN(users) {
+  // put users array to jsonbin
+  const response = await fetch(_baseUrl, {
+    method: "PUT",
+    headers: _headers,
+    body: JSON.stringify(users)
+  });
+  // waiting for the result
+  const result = await response.json(); // the new updated users array from jsonbin
+  console.log(result);
+  //updating the DOM with the new fetched users
+  appendUsers(result.record);
 }
 
 /**
@@ -63,6 +67,31 @@ function getMatches() {
   return data;
 }
 
+async function deleteUser() {
+  const deleteUser = confirm("Do you want to delete user?");
+  if (deleteUser && _selectedUserId) {
+    // delete user using php userService and fetch(...)
+    _users = _users.filter(user => user.id != _selectedUserId);
+    await updateJSONBIN(_users); // the result is the new updated users array
+    navigateTo("#/"); // navigating back to front page
+  }
+}
+
+/**
+ * Shows or hides loader by giden parameter: true/false
+ */
+function showLoader(show) {
+  const loader = document.querySelector('#loader');
+  if (show) {
+    loader.classList.remove("hide");
+  } else {
+    loader.classList.add("hide");
+  }
+}
+
+// ============================
+// ========== Events ==========
+
 async function showUserEvent(userId) {
   _selectedUserId = userId;
   localStorage.setItem("selectedUserId", _selectedUserId);
@@ -75,6 +104,30 @@ async function showUserPage() {
   appendMatches(matchData);
   navigateTo("#/user");
 }
+
+// =============================================
+// ========== Users Page (front page) ==========
+
+/**
+ * Appends users to the DOM
+ */
+function appendUsers(users) {
+  let htmlTemplate = "";
+  for (const user of users) {
+    htmlTemplate += /*html*/ `
+      <article onclick="showUserEvent(${user.id})">
+        <h3>${user.firstname} ${user.lastname}</h3>
+        <p>Age: ${user.age}, Gender: ${user.gender}, Looking for: ${user.lookingFor}</p>
+      </article>
+      `;
+  }
+  document.querySelector("#grid-users").innerHTML = htmlTemplate;
+  showLoader(false);
+}
+
+
+// =======================================
+// ========== User Profile Page ==========
 
 function appendMatches(data) {
   let htmlTemplate = /*html*/ `
@@ -100,7 +153,8 @@ function appendMatches(data) {
   showLoader(false);
 }
 
-// ========== CREATE ==========
+// ======================================
+// ========== Create User Page ==========
 
 async function createUserEvent() {
   const firstname = document.querySelector("#firstname").value;
@@ -134,7 +188,8 @@ async function createUser(firstname, lastname, age, haircolor, countryName, gend
   navigateTo("#/"); // navigating back to front page
 }
 
-// ========== Update ==========
+// ======================================
+// ========== Update User Page ==========
 
 function showUserUpdate() {
   const userToUpdate = _users.find(user => user.id == _selectedUserId);
@@ -182,49 +237,7 @@ async function updateUser(firstname, lastname, age, haircolor, countryName, gend
   showUserPage(); // navigating back to user page
 }
 
-// ========== Delete ==========
-async function deleteUser() {
-  const deleteUser = confirm("Do you want to delete user?");
-  if (deleteUser && _selectedUserId) {
-    // delete user using php userService and fetch(...)
-    _users = _users.filter(user => user.id != _selectedUserId);
-    await updateJSONBIN(_users); // the result is the new updated users array
-    navigateTo("#/"); // navigating back to front page
-  }
-}
-// ========== Loader ==========
-/**
- * Shows or hides loader by giden parameter: true/false
- */
-function showLoader(show) {
-  const loader = document.querySelector('#loader');
-  if (show) {
-    loader.classList.remove("hide");
-  } else {
-    loader.classList.add("hide");
-  }
-}
-
-
-// ========== Services ==========
-/**
- * Updates the data source on jsonbin with a given users arrays
- * @param {Array} users 
- */
-async function updateJSONBIN(users) {
-  // put users array to jsonbin
-  const response = await fetch(_baseUrl, {
-    method: "PUT",
-    headers: _headers,
-    body: JSON.stringify(users)
-  });
-  // waiting for the result
-  const result = await response.json(); // the new updated users array from jsonbin
-  console.log(result);
-  //updating the DOM with the new fetched users
-  appendUsers(result.record);
-}
-
+// ==============================
 // ========== INIT APP ==========
 async function init() {
   await loadUsers();
