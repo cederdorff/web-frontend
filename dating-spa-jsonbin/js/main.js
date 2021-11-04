@@ -1,18 +1,24 @@
 // ========== GLOBAL VARIABLES ==========
 let _users = [];
-const _baseUrl = "backend/userService.php";
 let _selectedUserId;
+const _baseUrl = "https://api.jsonbin.io/v3/b/6183bd069548541c29cd8475";
+const _headers = {
+  "X-Master-Key": "$2b$10$Uf1lbMtIPrrWeneN3Wz6JuDcyBuOz.1LbHiUg32QexCCJz3nOpoS2",
+  "Content-Type": "application/json"
+};
 
 // ========== READ ==========
 /**
  * Fetches user data from php backend services 
  */
 async function loadUsers() {
-  const url = _baseUrl + "?action=getUsers";
-  const response = await fetch(url);
+  const url = _baseUrl + "/latest"; // make sure to get the latest version
+  const response = await fetch(url, {
+    headers: _headers
+  });
   const data = await response.json();
   console.log(data);
-  _users = data;
+  _users = data.record;
   appendUsers(_users);
 }
 
@@ -24,7 +30,6 @@ function appendUsers(users) {
   for (const user of users) {
     htmlTemplate += /*html*/ `
       <article onclick="showUserEvent(${user.id})">
-      <img src="backend/small/${user.image || "placeholder.jpg"}">
         <h3>${user.firstname} ${user.lastname}</h3>
         <p>Age: ${user.age}, Gender: ${user.gender}, Looking for: ${user.lookingFor}</p>
       </article>
@@ -37,10 +42,24 @@ function appendUsers(users) {
 /**
  * returns matches based on given userId
  */
-async function getMatches(userId) {
-  const url = `${_baseUrl}?action=getMatches&userid=${userId}`;
-  const response = await fetch(url);
-  const data = await response.json();
+function getMatches() {
+  const matches = [];
+  const selectedUser = _users.find(user => user.id == _selectedUserId);
+  const ageRange = 4;
+
+  for (const user of _users) {
+    const minAge = user.age - ageRange;
+    const maxAge = user.age + ageRange;
+    if (selectedUser.age >= minAge && selectedUser.age <= maxAge && selectedUser.lookingFor == user.gender && user.lookingFor == selectedUser.gender && user.id != selectedUser.id) {
+      matches.push(user);
+    }
+  }
+
+  const data = {
+    selectedUser: selectedUser,
+    matches: matches,
+    matchCount: matches.length
+  };
   return data;
 }
 
@@ -51,7 +70,8 @@ async function showUserEvent(userId) {
 }
 
 async function showUserPage() {
-  const matchData = await getMatches(_selectedUserId);
+  const matchData = getMatches();
+  console.log(matchData);
   appendMatches(matchData);
   navigateTo("#/user");
 }
@@ -59,7 +79,6 @@ async function showUserPage() {
 function appendMatches(data) {
   let htmlTemplate = /*html*/ `
     <article class="selectedUser">
-      <img src="backend/small/${data.selectedUser.image || "placeholder.jpg"}">
         <h3>${data.selectedUser.firstname} ${data.selectedUser.lastname}</h3>
         <p>Age: ${data.selectedUser.age}, Gender: ${data.selectedUser.gender}</p>
         <p>Number of matches: ${data.matchCount}</p>
@@ -71,7 +90,6 @@ function appendMatches(data) {
   for (const user of data.matches) {
     htmlTemplate += /*html*/ `
       <article onclick="showUserEvent(${user.id})">
-        <img src="backend/small/${user.image || "placeholder.jpg"}">
         <h3>${user.firstname} ${user.lastname}</h3>
         <p>Age: ${user.age}, Gender: ${user.gender}</p>
       </article>
@@ -80,23 +98,6 @@ function appendMatches(data) {
   document.querySelector("#grid-matches").innerHTML = htmlTemplate;
   document.querySelector("#user .title").innerHTML = data.selectedUser.firstname;
   showLoader(false);
-}
-
-// ========== IMAGE UPLOAD ==========
-
-async function uploadImage(imageFile) {
-  let formData = new FormData();
-  formData.append("fileToUpload", imageFile);
-
-  const response = await fetch("backend/upload.php", {
-    method: "POST",
-    headers: { "Access-Control-Allow-Headers": "Content-Type" },
-    body: formData
-  });
-  // waiting for the result
-  const result = await response.json();
-  console.log(result);
-  return result;
 }
 
 // ========== CREATE ==========
@@ -109,13 +110,9 @@ async function createUserEvent() {
   const countryName = document.querySelector("#country").value;
   const gender = document.querySelector("#gender").value;
   const lookingFor = document.querySelector("#lookingFor").value;
-  const imageFile = document.querySelector("#fileToUpload").files[0];
 
-  if (firstname && lastname && age && haircolor && countryName && gender && lookingFor && imageFile) {
-    const imageResult = await uploadImage(imageFile);
-    if (imageResult.status === "success") {
-      createUser(firstname, lastname, age, haircolor, countryName, gender, lookingFor, imageResult.data.fileName);
-    }
+  if (firstname && lastname && age && haircolor && countryName && gender && lookingFor) {
+    createUser(firstname, lastname, age, haircolor, countryName, gender, lookingFor);
   } else {
     alert(" Please fill in all fields.");
   }
@@ -124,24 +121,16 @@ async function createUserEvent() {
 /**
  * creates a new user and saving in JSON file using the php backend service
  */
-async function createUser(firstname, lastname, age, haircolor, countryName, gender, lookingFor, image) {
+async function createUser(firstname, lastname, age, haircolor, countryName, gender, lookingFor) {
   const id = Date.now(); // dummy generated user id
   const newUser = { // declaring a new js object with the form values
-    id, firstname, lastname, age, haircolor, countryName, gender, lookingFor, image
+    id, firstname, lastname, age, haircolor, countryName, gender, lookingFor
   };
   console.log(newUser);
-
-  // post new user to php userService using fetch(...)
-  const response = await fetch(_baseUrl + "?action=createUser", {
-    method: "POST",
-    headers: { "Content-Type": "application/json; charset=utf-8" },
-    body: JSON.stringify(newUser) // parsing js object to json object
-  });
-  // waiting for the result
-  const result = await response.json();
-  console.log(result); // the result is the new updated users array
-  appendUsers(result); // update the DOM using appendUsers(...)
-  _users = result;
+  // pushing the new user object to the _users array
+  _users.push(newUser);
+  // wait for update
+  await updateJSONBIN(_users);
   navigateTo("#/"); // navigating back to front page
 }
 
@@ -158,8 +147,6 @@ function showUserUpdate() {
   document.querySelector("#countryUpdate").value = userToUpdate.countryName;
   document.querySelector("#genderUpdate").value = userToUpdate.gender;
   document.querySelector("#lookingForUpdate").value = userToUpdate.lookingFor;
-  document.querySelector("#imagePreviewUpdate").src = `backend/small/${userToUpdate.image || "placeholder.jpg"}`;
-  document.querySelector("#fileToUploadUpdate").value = "" // reset value
   navigateTo("#/update");
 }
 
@@ -171,38 +158,27 @@ async function updateUserEvent() {
   const countryName = document.querySelector("#countryUpdate").value;
   const gender = document.querySelector("#genderUpdate").value;
   const lookingFor = document.querySelector("#lookingForUpdate").value;
-  const imageFile = document.querySelector("#fileToUploadUpdate").files[0];
-
-  let imageFileName = document.querySelector("#imagePreviewUpdate").src.split("/").pop();
 
   if (firstname && lastname && age && haircolor && countryName && gender && lookingFor) {
-    if (imageFile) {
-      const imageResult = await uploadImage(imageFile);
-      if (imageResult.status === "success") {
-        imageFileName = imageResult.data.fileName;
-      }
-    }
-    updateUser(firstname, lastname, age, haircolor, countryName, gender, lookingFor, imageFileName);
+    updateUser(firstname, lastname, age, haircolor, countryName, gender, lookingFor);
   } else {
     alert(" Please fill in all fields.");
   }
 }
 
-async function updateUser(firstname, lastname, age, haircolor, countryName, gender, lookingFor, image) {
-  const userToUpdate = { // declaring a new js object with the form values
-    id: _selectedUserId, firstname, lastname, age, haircolor, countryName, gender, lookingFor, image
-  };
-  // put user to php userService using fetch(...)
-  const response = await fetch(_baseUrl + "?action=updateUser", {
-    method: "PUT",
-    headers: { "Content-Type": "application/json; charset=utf-8" },
-    body: JSON.stringify(userToUpdate) // parsing js object to json object
-  });
-  // waiting for the result
-  const result = await response.json();
-  console.log(result); // the result is the new updated users array
-  _users = result;
-  appendUsers(result); // update the DOM using appendUsers(...)
+async function updateUser(firstname, lastname, age, haircolor, countryName, gender, lookingFor) {
+  const userToUpdate = _users.find(user => user.id == _selectedUserId);
+  console.log(userToUpdate);
+  userToUpdate.firstname = firstname;
+  userToUpdate.lastname = lastname;
+  userToUpdate.age = age;
+  userToUpdate.haircolor = haircolor;
+  userToUpdate.countryName = countryName;
+  userToUpdate.gender = gender;
+  userToUpdate.lookingFor = lookingFor;
+
+  // wait for update
+  await updateJSONBIN(_users);
   showUserPage(); // navigating back to user page
 }
 
@@ -211,15 +187,8 @@ async function deleteUser() {
   const deleteUser = confirm("Do you want to delete user?");
   if (deleteUser && _selectedUserId) {
     // delete user using php userService and fetch(...)
-    const response = await fetch(`${_baseUrl}?action=deleteUser&userid=${_selectedUserId}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json; charset=utf-8" }
-    });
-    // waiting for the result
-    const result = await response.json();
-    console.log(result); // the result is the new updated users array
-    _users = result;
-    appendUsers(result); // update the DOM using appendUsers(...)
+    _users = _users.filter(user => user.id != _selectedUserId);
+    await updateJSONBIN(_users); // the result is the new updated users array
     navigateTo("#/"); // navigating back to front page
   }
 }
@@ -236,15 +205,24 @@ function showLoader(show) {
   }
 }
 
-// ========== Preview Image Helper function ==========
-function previewImage(file, previewId) {
-  if (file) {
-    let reader = new FileReader();
-    reader.onload = event => {
-      document.querySelector('#' + previewId).setAttribute('src', event.target.result);
-    };
-    reader.readAsDataURL(file);
-  }
+
+// ========== Services ==========
+/**
+ * Updates the data source on jsonbin with a given users arrays
+ * @param {Array} users 
+ */
+async function updateJSONBIN(users) {
+  // put users array to jsonbin
+  const response = await fetch(_baseUrl, {
+    method: "PUT",
+    headers: _headers,
+    body: JSON.stringify(users)
+  });
+  // waiting for the result
+  const result = await response.json(); // the new updated users array from jsonbin
+  console.log(result);
+  //updating the DOM with the new fetched users
+  appendUsers(result.record);
 }
 
 // ========== INIT APP ==========
