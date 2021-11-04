@@ -1,9 +1,10 @@
-// ========== GLOBAL VARIABLES ==========
+// ========== Global Variables ==========
 let _users = [];
 const _baseUrl = "backend/userService.php";
 let _selectedUserId;
 
-// ========== READ ==========
+// ===================================================
+// ========== Services and Helper Functions ==========
 /**
  * Fetches user data from php backend services 
  */
@@ -16,6 +17,93 @@ async function loadUsers() {
   appendUsers(_users);
 }
 
+/**
+ * returns matches based on given userId
+ */
+async function getMatches(userId) {
+  const url = `${_baseUrl}?action=getMatches&userid=${userId}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
+
+/**
+ * Upload image to php backend
+ */
+async function uploadImage(imageFile) {
+  let formData = new FormData();
+  formData.append("fileToUpload", imageFile);
+
+  const response = await fetch("backend/upload.php", {
+    method: "POST",
+    headers: { "Access-Control-Allow-Headers": "Content-Type" },
+    body: formData
+  });
+  // waiting for the result
+  const result = await response.json();
+  console.log(result);
+  return result;
+}
+
+/**
+ * Shows or hides loader by giden parameter: true/false
+ */
+function showLoader(show) {
+  const loader = document.querySelector('#loader');
+  if (show) {
+    loader.classList.remove("hide");
+  } else {
+    loader.classList.add("hide");
+  }
+}
+
+/**
+ * Preview Image Helper function
+ */
+function previewImage(file, previewId) {
+  if (file) {
+    let reader = new FileReader();
+    reader.onload = event => {
+      document.querySelector('#' + previewId).setAttribute('src', event.target.result);
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+// ============================
+// ========== Events ==========
+
+async function showUserEvent(userId) {
+  _selectedUserId = userId;
+  localStorage.setItem("selectedUserId", _selectedUserId);
+  showUserPage();
+}
+
+async function showUserPage() {
+  const matchData = await getMatches(_selectedUserId);
+  appendMatches(matchData);
+  navigateTo("#/user");
+}
+
+async function deleteUser() {
+  const deleteUser = confirm("Do you want to delete user?");
+  if (deleteUser && _selectedUserId) {
+    // delete user using php userService and fetch(...)
+    const response = await fetch(`${_baseUrl}?action=deleteUser&userid=${_selectedUserId}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json; charset=utf-8" }
+    });
+    // waiting for the result
+    const result = await response.json();
+    console.log(result); // the result is the new updated users array
+    _users = result;
+    appendUsers(result); // update the DOM using appendUsers(...)
+    navigateTo("#/"); // navigating back to front page
+  }
+}
+
+// =============================================
+// ========== Users Page (front page) ==========
 /**
  * Appends users to the DOM
  */
@@ -34,27 +122,8 @@ function appendUsers(users) {
   showLoader(false);
 }
 
-/**
- * returns matches based on given userId
- */
-async function getMatches(userId) {
-  const url = `${_baseUrl}?action=getMatches&userid=${userId}`;
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
-}
-
-async function showUserEvent(userId) {
-  _selectedUserId = userId;
-  localStorage.setItem("selectedUserId", _selectedUserId);
-  showUserPage();
-}
-
-async function showUserPage() {
-  const matchData = await getMatches(_selectedUserId);
-  appendMatches(matchData);
-  navigateTo("#/user");
-}
+// =======================================
+// ========== User Profile Page ==========
 
 function appendMatches(data) {
   let htmlTemplate = /*html*/ `
@@ -82,24 +151,8 @@ function appendMatches(data) {
   showLoader(false);
 }
 
-// ========== IMAGE UPLOAD ==========
-
-async function uploadImage(imageFile) {
-  let formData = new FormData();
-  formData.append("fileToUpload", imageFile);
-
-  const response = await fetch("backend/upload.php", {
-    method: "POST",
-    headers: { "Access-Control-Allow-Headers": "Content-Type" },
-    body: formData
-  });
-  // waiting for the result
-  const result = await response.json();
-  console.log(result);
-  return result;
-}
-
-// ========== CREATE ==========
+// ======================================
+// ========== Create User Page ==========
 
 async function createUserEvent() {
   const firstname = document.querySelector("#firstname").value;
@@ -145,7 +198,8 @@ async function createUser(firstname, lastname, age, haircolor, countryName, gend
   navigateTo("#/"); // navigating back to front page
 }
 
-// ========== Update ==========
+// ======================================
+// ========== Update User Page ==========
 
 function showUserUpdate() {
   const userToUpdate = _users.find(user => user.id == _selectedUserId);
@@ -206,48 +260,9 @@ async function updateUser(firstname, lastname, age, haircolor, countryName, gend
   showUserPage(); // navigating back to user page
 }
 
-// ========== Delete ==========
-async function deleteUser() {
-  const deleteUser = confirm("Do you want to delete user?");
-  if (deleteUser && _selectedUserId) {
-    // delete user using php userService and fetch(...)
-    const response = await fetch(`${_baseUrl}?action=deleteUser&userid=${_selectedUserId}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json; charset=utf-8" }
-    });
-    // waiting for the result
-    const result = await response.json();
-    console.log(result); // the result is the new updated users array
-    _users = result;
-    appendUsers(result); // update the DOM using appendUsers(...)
-    navigateTo("#/"); // navigating back to front page
-  }
-}
-// ========== Loader ==========
-/**
- * Shows or hides loader by giden parameter: true/false
- */
-function showLoader(show) {
-  const loader = document.querySelector('#loader');
-  if (show) {
-    loader.classList.remove("hide");
-  } else {
-    loader.classList.add("hide");
-  }
-}
-
-// ========== Preview Image Helper function ==========
-function previewImage(file, previewId) {
-  if (file) {
-    let reader = new FileReader();
-    reader.onload = event => {
-      document.querySelector('#' + previewId).setAttribute('src', event.target.result);
-    };
-    reader.readAsDataURL(file);
-  }
-}
-
+// ==============================
 // ========== INIT APP ==========
+
 async function init() {
   await loadUsers();
   _selectedUserId = localStorage.getItem("selectedUserId");
