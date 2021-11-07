@@ -25,7 +25,7 @@ class UsersPage {
         for (const user of users) {
             htmlTemplate += /*html*/ `
                 <article data-user-id="${user.id}">
-                <img src="backend/small/${user.image || "placeholder.jpg"}">
+                    <img src="backend/small/${user.image || "placeholder.jpg"}">
                     <h3>${user.firstname} ${user.lastname}</h3>
                     <p>Age: ${user.age}, Gender: ${user.gender}, Looking for: ${user.lookingFor}</p>
                 </article>
@@ -37,7 +37,10 @@ class UsersPage {
 
     attachEvents() {
         document.querySelectorAll(`#${this.id} [data-user-id]`).forEach(element => {
-            element.onclick = () => router.navigateTo("#/user", { userId: element.getAttribute("data-user-id") });
+            element.onclick = () => {
+                const userId = element.getAttribute("data-user-id");
+                router.navigateTo(`#/user/${userId}`, { userId: userId });
+            }
         })
     }
 

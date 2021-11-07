@@ -15,11 +15,11 @@ class Router {
                 view: createPage
             },
             {
-                path: "#/update",
+                path: "#/update/:id",
                 view: updatePage
             },
             {
-                path: "#/user",
+                path: "#/user/:id",
                 view: userPage
             }
         ];
@@ -47,12 +47,23 @@ class Router {
         this.showPage(path, params);
     }
 
-    showPage(path, params) {
+    showPage(path, params = {}) {
         this.hideAllPages(); // hide all pages
-        const view = this.routes.find(route => route.path === path).view;
-        console.log(view);
-        view.beforeShow(params);
-        document.getElementById(view.id).style.display = "block"; // show page by given path
+        const currentRoute = this.routes.find(route => {
+            if (route.path.includes("/:id")) {
+                const mainRoute = route.path.split("/:id")[0];
+                if (path.includes(mainRoute)) {
+                    params.id = path.split("/").pop();
+                    return route;
+                }
+
+            } else if (route.path.includes(path)) {
+                return route;
+            }
+        });
+        console.log(currentRoute);
+        currentRoute.view.beforeShow(params);
+        document.getElementById(currentRoute.view.id).style.display = "block"; // show page by given path
         this.setActiveTab(path);
     }
 
@@ -73,7 +84,7 @@ class Router {
      * Attaching event to nav links and preventing default anchor link event
      */
     attachNavLinkEvents() {
-        const navLinks = document.querySelectorAll(".nav-link");
+        const navLinks = document.querySelectorAll(".router-link");
         for (const link of navLinks) {
             link.addEventListener("click", event => {
                 const path = link.getAttribute("href");
@@ -83,6 +94,10 @@ class Router {
         }
     }
 
+    goBack() {
+        history.back();
+    }
+
     /**
      * Initialising the router, calling attachNavLinkEvents(), popstate event and navigateTo()
      */
@@ -90,11 +105,7 @@ class Router {
         this.attachNavLinkEvents();
         window.addEventListener("popstate", () => this.showPage(location.hash)); // change page when using back and forth in browser
 
-        let path = "#/"; // default path
-        if (this.routes[location.hash]) {
-            path = location.hash;
-        }
-        this.navigateTo(path);
+        this.navigateTo(location.hash);
     }
 
 }

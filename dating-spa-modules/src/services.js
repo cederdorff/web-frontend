@@ -16,8 +16,8 @@ class Services {
     async getUserData(userId) {
         const url = `${this.baseUrl}?action=getMatches&userid=${userId}`;
         const response = await fetch(url);
-        const matches = await response.json();
-        return matches;
+        const data = await response.json();
+        return data;
     }
 
     async uploadImage(imageFile) {

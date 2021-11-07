@@ -12,7 +12,7 @@ class UserPage {
         document.querySelector("#root").insertAdjacentHTML("beforeend", /*html*/`
             <section id="${this.id}" class="page">
                 <header class="topbar">
-                    <a href="#/" class="nav-link left">Back</a>
+                    <a class="left back">Back</a>
                     <h2 class="title">User</h2>
                 </header>
                 <section id="grid-matches" class="grid-container"></section>
@@ -51,18 +51,31 @@ class UserPage {
     }
 
     attachEvents() {
+        document.querySelector(`#${this.id} .back`).onclick = () => router.goBack();
+
         document.querySelectorAll(`#${this.id} [data-user-id]`).forEach(element => {
-            element.onclick = () => router.navigateTo("#/user", { userId: element.getAttribute("data-user-id") });
+            element.onclick = () => {
+                const userId = element.getAttribute("data-user-id");
+                router.navigateTo(`#/user/${userId}`, { userId: userId });
+            }
         });
 
-        document.querySelector(`#${this.id} .update`).onclick = () => router.navigateTo("#/update", { data: this.selectedUser });
+        document.querySelector(`#${this.id} .update`).onclick = () => router.navigateTo(`#/update/${this.selectedUserId}`);
 
+        document.querySelector(`#${this.id} .delete`).onclick = () => this.showDeleteDialog();
+    }
+
+    showDeleteDialog() {
+        const deleteUser = confirm("Do you want to delete user?");
+        if (deleteUser) {
+            services.deleteUser(this.selectedUserId);
+        }
     }
 
     beforeShow(params) {
         console.log(params);
-        this.selectedUserId = params.userId;
-        this.appendUserData(params.userId);
+        this.selectedUserId = params.id;
+        this.appendUserData(this.selectedUserId);
     }
 }
 

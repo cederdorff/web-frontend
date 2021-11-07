@@ -9,7 +9,7 @@ class CreatePage {
         document.querySelector("#root").insertAdjacentHTML("beforeend", /*html*/`
             <section id="${this.id}" class="page">
                 <header class="topbar">
-                    <a href="#/" class="nav-link left">Cancel</a>
+                    <a href="#/" class="router-link left">Cancel</a>
                     <h2>Create new user</h2>
                 </header>
                 <section>

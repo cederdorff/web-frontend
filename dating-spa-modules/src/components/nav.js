@@ -6,8 +6,8 @@ class Nav {
     render() {
         return /*html*/`
              <nav class="tabbar">
-                <a href="#/" class="nav-link">Users</a>
-                <a href="#/create" class="nav-link">Create</a>
+                <a href="#/" class="router-link">Users</a>
+                <a href="#/create" class="router-link">Create</a>
             </nav>
         `;
     }
