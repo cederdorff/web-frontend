@@ -2,14 +2,17 @@ import router from "../router.js";
 import services from "../services.js";
 
 class UserPage {
-    constructor() {
-        this.id = "user";
-        this.selectedUser;
-        this.render();
-    }
+	constructor(id) {
+		this.id = id;
+		this.selectedUser;
+		this.matches;
+		this.render();
+	}
 
-    render() {
-        document.querySelector("#root").insertAdjacentHTML("beforeend", /*html*/`
+	render() {
+		document.querySelector("#root").insertAdjacentHTML(
+			"beforeend",
+			/*html*/ `
             <section id="${this.id}" class="page">
                 <header class="topbar">
                     <a class="left back">Back</a>
@@ -17,67 +20,73 @@ class UserPage {
                 </header>
                 <section id="grid-matches" class="grid-container"></section>
             </section>
-        `);
-    }
+        `
+		);
+	}
 
-    async appendUserData(userId) {
-        const data = await services.getUserData(userId);
-        this.selectedUser = data;
-        let htmlTemplate = /*html*/ `
+	appendUserData() {
+		let htmlTemplate = /*html*/ `
             <article class="selectedUser">
-            <img src="backend/small/${data.selectedUser.image || "placeholder.jpg"}">
-                <h3>${data.selectedUser.firstname} ${data.selectedUser.lastname}</h3>
-                <p>Age: ${data.selectedUser.age}, Gender: ${data.selectedUser.gender}</p>
-                <p>Number of matches: ${data.matchCount}</p>
+            <img src="backend/small/${this.selectedUser.image || "placeholder.jpg"}">
+                <h3>${this.selectedUser.name}</h3>
+                <p>Age: ${this.selectedUser.age}, Gender: ${this.selectedUser.gender}</p>
+                <p>Number of matches: ${this.matches.length}</p>
                 <button type="button" class="update">Update</button>
                 <button type="button" class="delete">Delete</button>
             </article>
         `;
 
-        for (const user of data.matches) {
-            htmlTemplate += /*html*/ `
+		for (const user of this.matches) {
+			htmlTemplate += /*html*/ `
             <article data-user-id="${user.id}">
                 <img src="backend/small/${user.image || "placeholder.jpg"}">
-                <h3>${user.firstname} ${user.lastname}</h3>
+                <h3>${user.name}</h3>
                 <p>Age: ${user.age}, Gender: ${user.gender}</p>
             </article>
             `;
-        }
+		}
 
-        document.querySelector("#grid-matches").innerHTML = htmlTemplate;
-        document.querySelector("#user .title").innerHTML = data.selectedUser.firstname;
+		document.querySelector("#grid-matches").innerHTML = htmlTemplate;
+		document.querySelector("#user .title").innerHTML = this.selectedUser.name;
 
-        this.attachEvents();
-    }
+		this.attachEvents();
+	}
 
-    attachEvents() {
-        document.querySelector(`#${this.id} .back`).onclick = () => router.goBack();
+	attachEvents() {
+		document.querySelector(`#${this.id} .back`).onclick = () => router.navigateTo("#/");
 
-        document.querySelectorAll(`#${this.id} [data-user-id]`).forEach(element => {
-            element.onclick = () => {
-                const userId = element.getAttribute("data-user-id");
-                router.navigateTo(`#/user/${userId}`, { userId: userId });
-            }
-        });
+		document.querySelectorAll(`#${this.id} [data-user-id]`).forEach(element => {
+			element.onclick = () => {
+				const userId = element.getAttribute("data-user-id");
+				router.navigateTo(`#/user/${userId}`, {
+					userId: userId,
+				});
+			};
+		});
 
-        document.querySelector(`#${this.id} .update`).onclick = () => router.navigateTo(`#/update/${this.selectedUserId}`);
+		document.querySelector(`#${this.id} .update`).onclick = () =>
+			router.navigateTo(`#/update/${this.selectedUser.id}`);
 
-        document.querySelector(`#${this.id} .delete`).onclick = () => this.showDeleteDialog();
-    }
+		document.querySelector(`#${this.id} .delete`).onclick = () => this.showDeleteDialog();
+	}
 
-    showDeleteDialog() {
-        const deleteUser = confirm("Do you want to delete user?");
-        if (deleteUser) {
-            services.deleteUser(this.selectedUserId);
-        }
-    }
+	async showDeleteDialog() {
+		const deleteUser = confirm("Do you want to delete user?");
 
-    beforeShow(params) {
-        console.log(params);
-        this.selectedUserId = params.id;
-        this.appendUserData(this.selectedUserId);
-    }
+		if (deleteUser) {
+			const users = await services.deleteUser(this.selectedUser.id);
+			router.navigateTo("#/", {
+				users: users,
+			});
+		}
+	}
+
+	async beforeShow(params) {
+		this.selectedUser = await services.getUser(params.id);
+		this.matches = await services.getMatches(params.id);
+		this.appendUserData();
+	}
 }
 
-const userPage = new UserPage();
+const userPage = new UserPage("user");
 export default userPage;

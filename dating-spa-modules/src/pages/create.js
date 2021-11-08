@@ -1,22 +1,25 @@
+import router from "../router.js";
+import services from "../services.js";
+
 class CreatePage {
-    constructor() {
-        this.id = "create"; this.render();
+	constructor(id) {
+		this.id = id;
+		this.render();
 
-        this.firstnameInput = document.querySelector(`#${this.id} [name="firstname"]`);
-        this.lastnameInput = document.querySelector(`#${this.id} [name="lastname"]`);
-        this.ageInput = document.querySelector(`#${this.id} [name="age"]`);
-        this.haircolorInput = document.querySelector(`#${this.id} [name="haircolor"]`);
-        this.countryInput = document.querySelector(`#${this.id} [name="country"]`);
-        this.genderInput = document.querySelector(`#${this.id} [name="gender"]`);
-        this.lookingForInput = document.querySelector(`#${this.id} [name="lookingFor"]`);
-        this.imagePreview = document.querySelector(`#${this.id} [name="imagePreview"]`);
-        this.imageInput = document.querySelector(`#${this.id} [name="profileImage"]`);
+		this.nameInput = document.querySelector(`#${this.id} [name="name"]`);
+		this.ageInput = document.querySelector(`#${this.id} [name="age"]`);
+		this.genderInput = document.querySelector(`#${this.id} [name="gender"]`);
+		this.lookingForInput = document.querySelector(`#${this.id} [name="lookingFor"]`);
+		this.imagePreview = document.querySelector(`#${this.id} [name="imagePreview"]`);
+		this.imageInput = document.querySelector(`#${this.id} [name="profileImage"]`);
 
-        this.attachEvents();
-    }
+		this.attachEvents();
+	}
 
-    render() {
-        document.querySelector("#root").insertAdjacentHTML("beforeend", /*html*/`
+	render() {
+		document.querySelector("#root").insertAdjacentHTML(
+			"beforeend",
+			/*html*/ `
             <section id="${this.id}" class="page">
                 <header class="topbar">
                     <a href="#/" class="router-link left">Cancel</a>
@@ -24,11 +27,8 @@ class CreatePage {
                 </header>
                 <section>
                     <form>
-                        <input type="text" name="firstname" placeholder="Firstname">
-                        <input type="text" name="lastname" placeholder="Lastname">
+                        <input type="text" name="name" placeholder="Name">
                         <input type="number" name="age" placeholder="Age">
-                        <input type="text" name="haircolor" placeholder="Hair Color">
-                        <input type="text" name="country" placeholder="Country">
                         <select name="gender">
                             <option value="" selected disabled>Select gender</option>
                             <option value="Male">Male</option>
@@ -47,28 +47,42 @@ class CreatePage {
                     </form>
                 </section>
             </section>
-        `);
-    }
+        `
+		);
+	}
 
-    attachEvents() {
-        this.imageInput.onchange = () => this.previewImage();
-    }
+	attachEvents() {
+		this.imageInput.onchange = () => this.previewImage();
+		document.querySelector(`#${this.id} .save`).onclick = () => this.create();
+	}
 
-    previewImage() {
-        const file = this.imageInput.files[0];
-        if (file) {
-            let reader = new FileReader();
-            reader.onload = event => {
-                this.imagePreview.setAttribute('src', event.target.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    }
+	previewImage() {
+		const file = this.imageInput.files[0];
+		if (file) {
+			let reader = new FileReader();
+			reader.onload = event => {
+				this.imagePreview.setAttribute("src", event.target.result);
+			};
+			reader.readAsDataURL(file);
+		}
+	}
 
-    beforeShow(params) {
-        console.log(params);
-    }
+	async create() {
+		const image = await services.uploadImage(this.imageInput.files[0]);
+		const users = await services.createUser(
+			this.nameInput.value,
+			this.ageInput.value,
+			this.genderInput.value,
+			this.lookingForInput.value,
+			image.data.fileName
+		);
+		router.navigateTo("#/", { users: users });
+	}
+
+	beforeShow(params) {
+		console.log(params);
+	}
 }
 
-const createPage = new CreatePage();
+const createPage = new CreatePage("create");
 export default createPage;

@@ -2,26 +2,25 @@ import services from "../services.js";
 import router from "../router.js";
 
 class UpdatePage {
-    constructor() {
-        this.id = "update";
-        this.render();
-        this.selectedUserId;
+	constructor(id) {
+		this.id = id;
+		this.render();
+		this.selectedUser;
 
-        this.firstnameInput = document.querySelector(`#${this.id} [name="firstname"]`);
-        this.lastnameInput = document.querySelector(`#${this.id} [name="lastname"]`);
-        this.ageInput = document.querySelector(`#${this.id} [name="age"]`);
-        this.haircolorInput = document.querySelector(`#${this.id} [name="haircolor"]`);
-        this.countryInput = document.querySelector(`#${this.id} [name="country"]`);
-        this.genderInput = document.querySelector(`#${this.id} [name="gender"]`);
-        this.lookingForInput = document.querySelector(`#${this.id} [name="lookingFor"]`);
-        this.imagePreview = document.querySelector(`#${this.id} [name="imagePreview"]`);
-        this.imageInput = document.querySelector(`#${this.id} [name="profileImage"]`);
+		this.nameInput = document.querySelector(`#${this.id} [name="name"]`);
+		this.ageInput = document.querySelector(`#${this.id} [name="age"]`);
+		this.genderInput = document.querySelector(`#${this.id} [name="gender"]`);
+		this.lookingForInput = document.querySelector(`#${this.id} [name="lookingFor"]`);
+		this.imagePreview = document.querySelector(`#${this.id} [name="imagePreview"]`);
+		this.imageInput = document.querySelector(`#${this.id} [name="profileImage"]`);
 
-        this.attachEvents();
-    }
+		this.attachEvents();
+	}
 
-    render() {
-        document.querySelector("#root").insertAdjacentHTML("beforeend", /*html*/`
+	render() {
+		document.querySelector("#root").insertAdjacentHTML(
+			"beforeend",
+			/*html*/ `
             <section id="${this.id}" class="page">
                 <header class="topbar">
                     <a class="left cancel">Cancel</a>
@@ -29,11 +28,8 @@ class UpdatePage {
                 </header>
                 <section>
                     <form>
-                        <input type="text" name="firstname" placeholder="Firstname">
-                        <input type="text" name="lastname" placeholder="Lastname">
+                        <input type="text" name="name" placeholder="Name">
                         <input type="number" name="age" placeholder="Age">
-                        <input type="text" name="haircolor" placeholder="Hair Color">
-                        <input type="text" name="country" placeholder="Country">
                         <select name="gender">
                             <option value="" selected disabled>Select gender</option>
                             <option value="Male">Male</option>
@@ -49,35 +45,49 @@ class UpdatePage {
                         <img name="imagePreview" class="image-preview">
                         <input type="file" name="profileImage" accept="image/*"
                         onchange="previewImage(this.files[0], 'imagePreviewUpdate')">
-                        <button type="button" class="update">Save</button>
+                        <button type="button" class="save">Save</button>
                     </form>
                 </section>
             </section>
 
-        `);
-    }
+        `
+		);
+	}
 
-    attachEvents() {
-        document.querySelector(`#${this.id} .cancel`).onclick = () => router.goBack();
-    }
+	attachEvents() {
+		document.querySelector(`#${this.id} .cancel`).onclick = () => router.goBack();
+		document.querySelector(`#${this.id} .save`).onclick = () => this.save();
+	}
 
-    async beforeShow(params) {
-        console.log(params);
+	async save() {
+		if (this.imageInput.files[0]) {
+			const image = await services.uploadImage(this.imageInput.files[0]);
+			this.selectedUser.image = image.data.fileName;
+		}
 
-        const userData = await services.getUserData(params.id);
-        const userToUpdate = userData.selectedUser;
-        console.log(userToUpdate);
-        this.firstnameInput.value = userToUpdate.firstname;
-        this.lastnameInput.value = userToUpdate.lastname;
-        this.ageInput.value = userToUpdate.age;
-        this.haircolorInput.value = userToUpdate.haircolor;
-        this.countryInput.value = userToUpdate.countryName;
-        this.genderInput.value = userToUpdate.gender;
-        this.lookingForInput.value = userToUpdate.lookingFor;
-        this.imagePreview.src = `backend/small/${userToUpdate.image || "placeholder.jpg"}`;
-        this.imageInput.value = "" // reset value
-    }
+		const users = await services.updateUser(
+			this.selectedUser.id,
+			this.nameInput.value,
+			this.ageInput.value,
+			this.genderInput.value,
+			this.lookingForInput.value,
+			this.selectedUser.image
+		);
+		router.navigateTo("#/", { users: users });
+	}
+
+	async beforeShow(params) {
+		const user = await services.getUser(params.id);
+		this.selectedUser = user;
+
+		this.nameInput.value = this.selectedUser.name;
+		this.ageInput.value = this.selectedUser.age;
+		this.genderInput.value = this.selectedUser.gender;
+		this.lookingForInput.value = this.selectedUser.lookingFor;
+		this.imagePreview.src = `backend/small/${this.selectedUser.image || "placeholder.jpg"}`;
+		this.imageInput.value = ""; // reset value
+	}
 }
 
-const updatePage = new UpdatePage();
+const updatePage = new UpdatePage("update");
 export default updatePage;

@@ -5,6 +5,18 @@ $users = json_decode($jsonFile);
 
 if ($_GET['action'] == 'getUsers') {
     echo $jsonFile;
+} else if ($_GET['action'] == 'getUser') {
+    // Declare the userSelected variable - used to save the object of the username that was clicked on previous page
+    $userSelected = "";
+
+    // Loops through all the users in the database
+    foreach ($users as $user) {
+        // Checks the ID of the selected user, to find the same id in the database. Then saves that user in the variable
+        if ($_GET['userid'] == $user->id) {
+            $userSelected = $user;
+        }
+    }
+    echo json_encode($userSelected);
 } else if ($_GET['action'] == 'getMatches') {
     // Declare the userSelected variable - used to save the object of the username that was clicked on previous page
     $userSelected = "";
@@ -34,13 +46,7 @@ if ($_GET['action'] == 'getUsers') {
         }
     }
 
-    $data = [
-        "selectedUser" => $userSelected,
-        "matchCount" => $matchCount,
-        "matches" => $matches
-    ];
-
-    echo json_encode($data);
+    echo json_encode($matches);
 } else if ($_GET['action'] == 'createUser') {
     $newUser = json_decode(file_get_contents("php://input"));
     array_push($users, $newUser);
@@ -54,11 +60,8 @@ if ($_GET['action'] == 'getUsers') {
 
     foreach ($users as $user) {
         if ($user->id == $userToupdate->id) {
-            $user->firstname = $userToupdate->firstname;
-            $user->lastname = $userToupdate->lastname;
+            $user->name = $userToupdate->name;
             $user->age = $userToupdate->age;
-            $user->haircolor = $userToupdate->haircolor;
-            $user->countryName = $userToupdate->countryName;
             $user->gender = $userToupdate->gender;
             $user->lookingFor = $userToupdate->lookingFor;
             $user->image = $userToupdate->image;
