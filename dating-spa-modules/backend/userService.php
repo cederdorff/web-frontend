@@ -1,4 +1,6 @@
 <?php
+// Get access to the FileUpload Class
+require "src/fileUpload.php";
 // Read the JSON file from the root folder of the website
 $jsonFile = file_get_contents("users.json");
 $users = json_decode($jsonFile);
@@ -84,4 +86,27 @@ if ($_GET['action'] == 'getUsers') {
     fwrite($fp, $encoded);
     fclose($fp);
     echo $encoded;
+} else if ($_GET['action'] == "uploadImage") {
+    // Creates a new instance of the FileUpload class
+    $newUpload = new FileUpload($_FILES['fileToUpload']);
+
+    // Check if file type is an accepted image file format
+    $acceptedFileTypes = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp'];
+    if (in_array($newUpload->GetFileType(), $acceptedFileTypes)) {
+
+        // Renaming the file before uploading
+        $newUpload->RenameFile(date('Ymd_His'));
+
+        // Creates thumbnails in three different sizes
+        $newUpload->ResizeAndUpload("files/small", 200);
+        $newUpload->ResizeAndUpload("files/medium", 500);
+        $newUpload->ResizeAndUpload("files/large", 1000);
+
+        // Uploads the original file, and saves the JSON response in a session 
+        echo $newUpload->UploadFile("files/original");
+    } else {
+        $data['status'] = "failed";
+        $data['error'] = "Wrong file type";
+        echo json_encode($data);
+    }
 }

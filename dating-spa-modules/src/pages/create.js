@@ -69,12 +69,13 @@ class CreatePage {
 
 	async create() {
 		const image = await services.uploadImage(this.imageInput.files[0]);
+		console.log(image);
 		const users = await services.createUser(
 			this.nameInput.value,
 			this.ageInput.value,
 			this.genderInput.value,
 			this.lookingForInput.value,
-			image.data.fileName
+			image.name
 		);
 		router.navigateTo("#/", { users: users });
 	}

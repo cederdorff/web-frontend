@@ -6,7 +6,7 @@ class Services {
 	}
 
 	async getUsers() {
-		const url = "backend/users.json";
+		const url = `${this.baseUrl}?action=getUsers`;
 		const response = await fetch(url);
 		const data = await response.json();
 		this.users = data;
@@ -32,9 +32,11 @@ class Services {
 		let formData = new FormData();
 		formData.append("fileToUpload", imageFile);
 
-		const response = await fetch("backend/upload.php", {
+		const response = await fetch(`${this.baseUrl}?action=uploadImage`, {
 			method: "POST",
-			headers: { "Access-Control-Allow-Headers": "Content-Type" },
+			headers: {
+				"Access-Control-Allow-Headers": "Content-Type",
+			},
 			body: formData,
 		});
 		// waiting for the result
