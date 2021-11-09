@@ -1,6 +1,6 @@
 <?php
 // Get access to the FileUpload Class
-require "src/fileUpload.php";
+require "fileUpload.php";
 // Read the JSON file from the root folder of the website
 $jsonFile = file_get_contents("users.json");
 $users = json_decode($jsonFile);

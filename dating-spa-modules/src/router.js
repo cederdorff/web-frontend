@@ -42,14 +42,21 @@ class Router {
 	/**
 	 * Navigating SPA to specific page by given path
 	 */
-	navigateTo(path, params) {
+	navigateTo(path, params = {}) {
 		window.history.pushState({}, path, this.basePath + path);
 		this.showPage(path, params);
 	}
 
-	showPage(path, params = {}) {
+	showPage(path, params) {
 		this.hideAllPages(); // hide all pages
-		const currentRoute = this.routes.find(route => {
+		const route = this.matchRoute(path, params);
+		route.view.beforeShow(params);
+		document.getElementById(route.view.id).style.display = "block";
+		this.setActiveTab(route.path);
+	}
+
+	matchRoute(path, params) {
+		const route = this.routes.find(route => {
 			if (route.path.includes("/:id")) {
 				const mainRoute = route.path.split("/:id")[0];
 				if (path.includes(mainRoute)) {
@@ -60,10 +67,8 @@ class Router {
 				return route;
 			}
 		});
-		console.log(currentRoute);
-		currentRoute.view.beforeShow(params);
-		document.getElementById(currentRoute.view.id).style.display = "block"; // show page by given path
-		this.setActiveTab(currentRoute.path);
+
+		return route;
 	}
 
 	/**
