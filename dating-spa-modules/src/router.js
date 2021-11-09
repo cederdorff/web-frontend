@@ -27,7 +27,6 @@ class Router {
 		this.basePath = location.pathname.replace("index.html", ""); // remove index.html from path
 		this.pages = document.querySelectorAll(".page");
 		this.navLinks = document.querySelectorAll("nav a");
-		this.initRouter();
 	}
 
 	/**
@@ -105,7 +104,7 @@ class Router {
 	/**
 	 * Initialising the router, calling attachNavLinkEvents(), popstate event and navigateTo()
 	 */
-	initRouter() {
+	init() {
 		this.attachNavLinkEvents();
 		window.addEventListener("popstate", () => this.showPage(location.hash)); // change page when using back and forth in browser
 		this.navigateTo(location.hash);
