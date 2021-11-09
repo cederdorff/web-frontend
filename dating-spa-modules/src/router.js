@@ -74,8 +74,6 @@ class Router {
 	 * sets active menu item by given path
 	 */
 	setActiveTab(path) {
-		console.log(path);
-		console.log(this.navLinks);
 		for (const link of this.navLinks) {
 			if (path === link.getAttribute("href")) {
 				link.classList.add("active");
