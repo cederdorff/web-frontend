@@ -1,7 +1,7 @@
 import router from "../router.js";
 import services from "../services.js";
 
-class UserPage {
+export default class UserProfilePage {
 	constructor(id) {
 		this.id = id;
 		this.selectedUser;
@@ -18,7 +18,7 @@ class UserPage {
                     <a class="left back">Back</a>
                     <h2 class="title">User</h2>
                 </header>
-                <section id="grid-matches" class="grid-container"></section>
+                <section class="matches grid-container"></section>
             </section>
         `
 		);
@@ -27,7 +27,7 @@ class UserPage {
 	appendUserData() {
 		let htmlTemplate = /*html*/ `
             <article class="selectedUser">
-            <img src="backend/small/${this.selectedUser.image || "placeholder.jpg"}">
+            <img src="backend/files/medium/${this.selectedUser.image || "placeholder.jpg"}">
                 <h3>${this.selectedUser.name}</h3>
                 <p>Age: ${this.selectedUser.age}, Gender: ${this.selectedUser.gender}</p>
                 <p>Number of matches: ${this.matches.length}</p>
@@ -39,15 +39,15 @@ class UserPage {
 		for (const user of this.matches) {
 			htmlTemplate += /*html*/ `
             <article data-user-id="${user.id}">
-                <img src="backend/small/${user.image || "placeholder.jpg"}">
+                <img src="backend/files/medium/${user.image || "placeholder.jpg"}">
                 <h3>${user.name}</h3>
                 <p>Age: ${user.age}, Gender: ${user.gender}</p>
             </article>
             `;
 		}
 
-		document.querySelector("#grid-matches").innerHTML = htmlTemplate;
-		document.querySelector("#user .title").innerHTML = this.selectedUser.name;
+		document.querySelector(`#${this.id} .matches`).innerHTML = htmlTemplate;
+		document.querySelector(`#${this.id} .title`).innerHTML = this.selectedUser.name;
 
 		this.attachEvents();
 	}
@@ -87,6 +87,3 @@ class UserPage {
 		this.appendUserData();
 	}
 }
-
-const userPage = new UserPage("user");
-export default userPage;

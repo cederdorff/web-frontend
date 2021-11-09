@@ -1,7 +1,7 @@
 import router from "../router.js";
 import services from "../services.js";
 
-class CreatePage {
+export default class CreatePage {
 	constructor(id) {
 		this.id = id;
 		this.render();
@@ -83,6 +83,3 @@ class CreatePage {
 		console.log(params);
 	}
 }
-
-const createPage = new CreatePage("create");
-export default createPage;

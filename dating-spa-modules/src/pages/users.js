@@ -1,7 +1,7 @@
 import router from "../router.js";
 import services from "../services.js";
 
-class UsersPage {
+export default class UsersPage {
 	constructor(id) {
 		this.id = id;
 		this.render();
@@ -57,6 +57,3 @@ class UsersPage {
 		}
 	}
 }
-
-const usersPage = new UsersPage("users");
-export default usersPage;

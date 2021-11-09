@@ -1,7 +1,7 @@
 import services from "../services.js";
 import router from "../router.js";
 
-class UpdatePage {
+export default class UpdatePage {
 	constructor(id) {
 		this.id = id;
 		this.render();
@@ -84,10 +84,7 @@ class UpdatePage {
 		this.ageInput.value = this.selectedUser.age;
 		this.genderInput.value = this.selectedUser.gender;
 		this.lookingForInput.value = this.selectedUser.lookingFor;
-		this.imagePreview.src = `backend/small/${this.selectedUser.image || "placeholder.jpg"}`;
+		this.imagePreview.src = `backend/files/medium/${this.selectedUser.image || "placeholder.jpg"}`;
 		this.imageInput.value = ""; // reset value
 	}
 }
-
-const updatePage = new UpdatePage("update");
-export default updatePage;

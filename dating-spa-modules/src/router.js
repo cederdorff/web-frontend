@@ -1,26 +1,26 @@
-import createPage from "./pages/create.js";
-import updatePage from "./pages/update.js";
-import userPage from "./pages/user.js";
-import usersPage from "./pages/users.js";
+import CreatePage from "./pages/create.js";
+import UpdatePage from "./pages/update.js";
+import UserProfilePage from "./pages/user.js";
+import UsersPage from "./pages/users.js";
 
 class Router {
 	constructor() {
 		this.routes = [
 			{
 				path: "#/",
-				view: usersPage,
+				view: new UsersPage("users"),
 			},
 			{
 				path: "#/create",
-				view: createPage,
+				view: new CreatePage("create"),
 			},
 			{
 				path: "#/update/:id",
-				view: updatePage,
+				view: new UpdatePage("update"),
 			},
 			{
 				path: "#/user/:id",
-				view: userPage,
+				view: new UserProfilePage("profile"),
 			},
 		];
 
