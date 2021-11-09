@@ -3,7 +3,7 @@
 require "fileUpload.php";
 // Read the JSON file from the root folder of the website
 $jsonFile = file_get_contents("users.json");
-$users = json_decode($jsonFile);
+$users = json_decode($jsonFile, true);
 
 if ($_GET['action'] == 'getUsers') {
     echo $jsonFile;
@@ -50,7 +50,7 @@ if ($_GET['action'] == 'getUsers') {
 
     echo json_encode($matches);
 } else if ($_GET['action'] == 'createUser') {
-    $newUser = json_decode(file_get_contents("php://input"));
+    $newUser = json_decode(file_get_contents("php://input"), true);
     array_push($users, $newUser);
     $encoded = json_encode($users);
     $fp = fopen('users.json', 'w');
@@ -58,7 +58,7 @@ if ($_GET['action'] == 'getUsers') {
     fclose($fp);
     echo $encoded;
 } else if ($_GET['action'] == 'updateUser') {
-    $userToupdate = json_decode(file_get_contents("php://input"));
+    $userToupdate = json_decode(file_get_contents("php://input"), true);
 
     foreach ($users as $user) {
         if ($user->id == $userToupdate->id) {
