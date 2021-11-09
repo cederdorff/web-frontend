@@ -1,3 +1,4 @@
+import loader from "../components/loader.js";
 import router from "../router.js";
 import services from "../services.js";
 
@@ -38,8 +39,10 @@ export default class UsersPage {
 	}
 
 	async initUsers() {
+		loader.show();
 		const users = await services.getUsers();
 		this.appendUsers(users);
+		loader.hide();
 	}
 
 	attachEvents() {

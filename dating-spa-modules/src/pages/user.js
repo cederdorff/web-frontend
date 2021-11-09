@@ -1,3 +1,4 @@
+import loader from "../components/loader.js";
 import router from "../router.js";
 import services from "../services.js";
 
@@ -74,16 +75,20 @@ export default class UserProfilePage {
 		const deleteUser = confirm("Do you want to delete user?");
 
 		if (deleteUser) {
+			loader.show();
 			const users = await services.deleteUser(this.selectedUser.id);
 			router.navigateTo("#/", {
 				users: users,
 			});
+			loader.hide();
 		}
 	}
 
 	async beforeShow(params) {
+		loader.show();
 		this.selectedUser = await services.getUser(params.id);
 		this.matches = await services.getMatches(params.id);
 		this.appendUserData();
+		loader.hide();
 	}
 }

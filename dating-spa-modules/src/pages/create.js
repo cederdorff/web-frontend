@@ -1,3 +1,4 @@
+import loader from "../components/loader.js";
 import router from "../router.js";
 import services from "../services.js";
 
@@ -68,6 +69,7 @@ export default class CreatePage {
 	}
 
 	async create() {
+		loader.show();
 		const image = await services.uploadImage(this.imageInput.files[0]);
 		const users = await services.createUser(
 			this.nameInput.value,
@@ -77,6 +79,7 @@ export default class CreatePage {
 			image.name
 		);
 		router.navigateTo("#/", { users: users });
+		loader.hide();
 	}
 
 	beforeShow(params) {

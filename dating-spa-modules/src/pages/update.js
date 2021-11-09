@@ -1,5 +1,6 @@
 import services from "../services.js";
 import router from "../router.js";
+import loader from "../components/loader.js";
 
 export default class UpdatePage {
 	constructor(id) {
@@ -60,6 +61,7 @@ export default class UpdatePage {
 	}
 
 	async save() {
+		loader.show();
 		if (this.imageInput.files[0]) {
 			const image = await services.uploadImage(this.imageInput.files[0]);
 			this.selectedUser.image = image.data.fileName;
@@ -74,9 +76,11 @@ export default class UpdatePage {
 			this.selectedUser.image
 		);
 		router.navigateTo("#/", { users: users });
+		loader.hide();
 	}
 
 	async beforeShow(params) {
+		loader.show();
 		const user = await services.getUser(params.id);
 		this.selectedUser = user;
 
@@ -86,5 +90,6 @@ export default class UpdatePage {
 		this.lookingForInput.value = this.selectedUser.lookingFor;
 		this.imagePreview.src = `backend/files/medium/${this.selectedUser.image || "placeholder.jpg"}`;
 		this.imageInput.value = ""; // reset value
+		loader.hide();
 	}
 }
