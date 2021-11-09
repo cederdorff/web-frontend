@@ -41,7 +41,6 @@ class Services {
 		});
 		// waiting for the result
 		const result = await response.json();
-		console.log(result);
 		return result;
 	}
 
@@ -52,7 +51,7 @@ class Services {
 		});
 		// waiting for the result
 		const result = await response.json();
-		console.log(result); // the result is the new updated users array
+		// the result is the new updated users array
 		this.users = result;
 		return this.users;
 	}
