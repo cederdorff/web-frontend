@@ -24,7 +24,6 @@ class Services {
 		const url = `${this.baseUrl}?action=getUser&userid=${userId}`;
 		const response = await fetch(url);
 		const user = await response.json();
-		console.log(user);
 		return user;
 	}
 
@@ -77,7 +76,7 @@ class Services {
 		});
 		// waiting for the result
 		const result = await response.json();
-		console.log(result); // the result is the new updated users array
+		// the result is the new updated users array
 		this.users = result;
 		return this.users;
 	}
@@ -100,7 +99,7 @@ class Services {
 		});
 		// waiting for the result
 		const result = await response.json();
-		console.log(result); // the result is the new updated users array
+		// the result is the new updated users array
 		this.users = result;
 		return this.users;
 	}

@@ -1,11 +1,9 @@
-export default class Nav {
-	constructor() {
-		this.render();
-	}
+class Nav {
+	constructor() {}
 
 	render() {
 		document.querySelector("#root").insertAdjacentHTML(
-			"beforeend",
+			"afterbegin",
 			/*html*/ `
             <nav class="tabbar">
                 <a href="#/" class="router-link">Users</a>
@@ -15,3 +13,6 @@ export default class Nav {
 		);
 	}
 }
+
+const nav = new Nav();
+export default nav;

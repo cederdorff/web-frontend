@@ -1,7 +1,7 @@
 console.log("app.js is running 🎉");
 
-import Nav from "./components/nav.js";
+import nav from "./components/nav.js";
 import router from "./router.js";
 
-const nav = new Nav();
+nav.render();
 router.init();

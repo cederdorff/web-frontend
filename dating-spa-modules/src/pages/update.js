@@ -61,22 +61,39 @@ export default class UpdatePage {
 	}
 
 	async save() {
-		loader.show();
-		if (this.imageInput.files[0]) {
-			const image = await services.uploadImage(this.imageInput.files[0]);
-			this.selectedUser.image = image.data.fileName;
-		}
+		if (this.validate()) {
+			loader.show();
+			if (this.imageInput.files[0]) {
+				const image = await services.uploadImage(this.imageInput.files[0]);
+				this.selectedUser.image = image.data.fileName;
+			}
 
-		const users = await services.updateUser(
-			this.selectedUser.id,
-			this.nameInput.value,
-			this.ageInput.value,
-			this.genderInput.value,
-			this.lookingForInput.value,
-			this.selectedUser.image
-		);
-		router.navigateTo("#/", { users: users });
-		loader.hide();
+			const users = await services.updateUser(
+				this.selectedUser.id,
+				this.nameInput.value,
+				this.ageInput.value,
+				this.genderInput.value,
+				this.lookingForInput.value,
+				this.selectedUser.image
+			);
+			router.navigateTo("#/", { users: users });
+			loader.hide();
+		}
+	}
+
+	validate() {
+		if (
+			this.nameInput.value &&
+			this.ageInput.value &&
+			this.genderInput.value &&
+			this.lookingForInput.value &&
+			this.imageInput.files[0]
+		) {
+			return true;
+		} else {
+			alert("Please, fill in all fields.");
+			return false;
+		}
 	}
 
 	async beforeShow(params) {

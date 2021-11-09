@@ -25,8 +25,8 @@ class Router {
 		];
 
 		this.basePath = location.pathname.replace("index.html", ""); // remove index.html from path
-		this.pages = document.querySelectorAll(".page");
-		this.navLinks = document.querySelectorAll("nav a");
+		this.pages;
+		this.navLinks;
 	}
 
 	/**
@@ -74,6 +74,8 @@ class Router {
 	 * sets active menu item by given path
 	 */
 	setActiveTab(path) {
+		console.log(path);
+		console.log(this.navLinks);
 		for (const link of this.navLinks) {
 			if (path === link.getAttribute("href")) {
 				link.classList.add("active");
@@ -105,6 +107,8 @@ class Router {
 	 * Initialising the router, calling attachNavLinkEvents(), popstate event and navigateTo()
 	 */
 	init() {
+		this.pages = document.querySelectorAll(".page");
+		this.navLinks = document.querySelectorAll("nav a");
 		this.attachNavLinkEvents();
 		window.addEventListener("popstate", () => this.showPage(location.hash)); // change page when using back and forth in browser
 		this.navigateTo(location.hash);

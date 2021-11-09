@@ -69,17 +69,34 @@ export default class CreatePage {
 	}
 
 	async create() {
-		loader.show();
-		const image = await services.uploadImage(this.imageInput.files[0]);
-		const users = await services.createUser(
-			this.nameInput.value,
-			this.ageInput.value,
-			this.genderInput.value,
-			this.lookingForInput.value,
-			image.name
-		);
-		router.navigateTo("#/", { users: users });
-		loader.hide();
+		if (this.validate()) {
+			loader.show();
+			const image = await services.uploadImage(this.imageInput.files[0]);
+			const users = await services.createUser(
+				this.nameInput.value,
+				this.ageInput.value,
+				this.genderInput.value,
+				this.lookingForInput.value,
+				image.name
+			);
+			router.navigateTo("#/", { users: users });
+			loader.hide();
+		}
+	}
+
+	validate() {
+		if (
+			this.nameInput.value &&
+			this.ageInput.value &&
+			this.genderInput.value &&
+			this.lookingForInput.value &&
+			this.imageInput.files[0]
+		) {
+			return true;
+		} else {
+			alert("Please, fill in all fields.");
+			return false;
+		}
 	}
 
 	beforeShow(params) {
