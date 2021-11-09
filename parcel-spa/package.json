@@ -3,10 +3,10 @@
   "source": "src/index.html",
   "scripts": {
     "start": "parcel",
-    "run": "parcel --open",
+    "run": "parcel -p 3000 --open",
     "build": "parcel build"
   },
   "devDependencies": {
-    "parcel": "^2.0.1"
+    "parcel": "latest"
   }
 }
