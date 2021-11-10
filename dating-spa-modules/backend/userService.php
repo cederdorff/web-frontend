@@ -3,7 +3,7 @@
 require "fileUpload.php";
 // Read the JSON file from the root folder of the website
 $jsonFile = file_get_contents("users.json");
-$users = json_decode($jsonFile, true);
+$users = json_decode($jsonFile);
 
 if ($_GET['action'] == 'getUsers') {
     echo $jsonFile;
@@ -50,7 +50,7 @@ if ($_GET['action'] == 'getUsers') {
 
     echo json_encode($matches);
 } else if ($_GET['action'] == 'createUser') {
-    $newUser = json_decode(file_get_contents("php://input"), true);
+    $newUser = json_decode(file_get_contents("php://input"));
     array_push($users, $newUser);
     $encoded = json_encode($users);
     $fp = fopen('users.json', 'w');
@@ -58,7 +58,7 @@ if ($_GET['action'] == 'getUsers') {
     fclose($fp);
     echo $encoded;
 } else if ($_GET['action'] == 'updateUser') {
-    $userToupdate = json_decode(file_get_contents("php://input"), true);
+    $userToupdate = json_decode(file_get_contents("php://input"));
 
     foreach ($users as $user) {
         if ($user->id == $userToupdate->id) {
@@ -67,13 +67,13 @@ if ($_GET['action'] == 'getUsers') {
             $user->gender = $userToupdate->gender;
             $user->lookingFor = $userToupdate->lookingFor;
             $user->image = $userToupdate->image;
-            $encoded = json_encode($users);
-            $fp = fopen('users.json', 'w');
-            fwrite($fp, $encoded);
-            fclose($fp);
-            echo $encoded;
         }
     }
+    $encoded = json_encode($users);
+    $fp = fopen('users.json', 'w');
+    fwrite($fp, $encoded);
+    fclose($fp);
+    echo $encoded;
 } else if ($_GET['action'] == 'deleteUser') {
     $newUsersArray = [];
     foreach ($users as $user) {
