@@ -1,6 +1,6 @@
 import CreatePage from "./pages/create.js";
 import UpdatePage from "./pages/update.js";
-import UserProfilePage from "./pages/user.js";
+import UserProfilePage from "./pages/profile.js";
 import UsersPage from "./pages/users.js";
 
 class Router {
