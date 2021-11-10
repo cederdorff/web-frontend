@@ -21,9 +21,11 @@ class Services {
 	}
 
 	async getUser(userId) {
+		console.log(userId, `${this.baseUrl}?action=getUser&userid=${userId}`);
 		const url = `${this.baseUrl}?action=getUser&userid=${userId}`;
 		const response = await fetch(url);
 		const user = await response.json();
+		console.log(user);
 		return user;
 	}
 
@@ -75,7 +77,7 @@ class Services {
 			body: JSON.stringify(newUser), // parsing js object to json object
 		});
 		// waiting for the result
-		const result = await response.json();
+		const result = await response.text();
 		// the result is the new updated users array
 		this.users = result;
 		console.log(result);
