@@ -58,6 +58,18 @@ export default class UpdatePage {
 	attachEvents() {
 		document.querySelector(`#${this.id} .cancel`).onclick = () => router.goBack();
 		document.querySelector(`#${this.id} .save`).onclick = () => this.save();
+		this.imageInput.onchange = () => this.previewImage();
+	}
+
+	previewImage() {
+		const file = this.imageInput.files[0];
+		if (file) {
+			let reader = new FileReader();
+			reader.onload = event => {
+				this.imagePreview.setAttribute("src", event.target.result);
+			};
+			reader.readAsDataURL(file);
+		}
 	}
 
 	async save() {
@@ -65,7 +77,8 @@ export default class UpdatePage {
 			loader.show();
 			if (this.imageInput.files[0]) {
 				const image = await services.uploadImage(this.imageInput.files[0]);
-				this.selectedUser.image = image.data.fileName;
+				console.log(image);
+				this.selectedUser.image = image.name;
 			}
 
 			const users = await services.updateUser(
