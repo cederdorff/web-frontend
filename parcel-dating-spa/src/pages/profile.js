@@ -56,7 +56,7 @@ export default class UserProfilePage {
 	}
 
 	attachEvents() {
-		document.querySelector(`#${this.id} .back`).onclick = () => router.goBack();
+		document.querySelector(`#${this.id} .back`).onclick = () => router.navigateTo("/");
 
 		document.querySelectorAll(`#${this.id} [data-user-id]`).forEach(element => {
 			element.onclick = () => {

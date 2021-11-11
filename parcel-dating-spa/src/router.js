@@ -24,7 +24,6 @@ class Router {
 			},
 		];
 
-		this.basePath = location.pathname.replace("index.html", ""); // remove index.html from path
 		this.pages;
 		this.navLinks;
 	}

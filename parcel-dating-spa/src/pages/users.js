@@ -6,7 +6,7 @@ export default class UsersPage {
 	constructor(id) {
 		this.id = id;
 		this.render();
-		this.initUsers();
+		this.init();
 	}
 
 	render() {
@@ -38,7 +38,7 @@ export default class UsersPage {
 		this.attachEvents();
 	}
 
-	async initUsers() {
+	async init() {
 		loader.show();
 		const users = await services.getUsers();
 		this.appendUsers(users);
