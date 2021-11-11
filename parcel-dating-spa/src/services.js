@@ -25,7 +25,6 @@ class Services {
 	}
 
 	async getUser(userId) {
-		console.log(userId, `${this.baseUrl}?action=getUser&userId=${userId}`);
 		const url = `${this.baseUrl}?action=getUser&userId=${userId}`;
 		const response = await fetch(url);
 		const user = await response.json();
