@@ -58,19 +58,19 @@ export default class UserProfilePage {
 	}
 
 	attachEvents() {
-		document.querySelector(`#${this.id} .back`).onclick = () => router.navigateTo("#/");
+		document.querySelector(`#${this.id} .back`).onclick = () => router.goBack();
 
 		document.querySelectorAll(`#${this.id} [data-user-id]`).forEach(element => {
 			element.onclick = () => {
 				const userId = element.getAttribute("data-user-id");
-				router.navigateTo(`#/user/${userId}`, {
+				router.navigateTo(`/user/${userId}`, {
 					userId: userId,
 				});
 			};
 		});
 
 		document.querySelector(`#${this.id} .update`).onclick = () =>
-			router.navigateTo(`#/update/${this.selectedUser.id}`);
+			router.navigateTo(`/update/${this.selectedUser.id}`);
 
 		document.querySelector(`#${this.id} .delete`).onclick = () => this.showDeleteDialog();
 	}
@@ -81,7 +81,7 @@ export default class UserProfilePage {
 		if (deleteUser) {
 			loader.show();
 			const users = await services.deleteUser(this.selectedUser.id);
-			router.navigateTo("#/", {
+			router.navigateTo("/", {
 				users: users,
 			});
 			loader.hide();

@@ -79,7 +79,7 @@ export default class CreatePage {
 				this.lookingForInput.value,
 				image.name
 			);
-			router.navigateTo("#/", { users: users });
+			router.navigateTo("/", { users: users });
 			loader.hide();
 		}
 	}

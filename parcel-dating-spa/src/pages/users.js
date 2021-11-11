@@ -51,7 +51,7 @@ export default class UsersPage {
 		document.querySelectorAll(`#${this.id} [data-user-id]`).forEach(element => {
 			element.onclick = () => {
 				const userId = element.getAttribute("data-user-id");
-				router.navigateTo(`#/user/${userId}`, { userId: userId });
+				router.navigateTo(`/user/${userId}`);
 			};
 		});
 	}

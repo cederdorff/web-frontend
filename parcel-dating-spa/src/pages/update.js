@@ -89,7 +89,7 @@ export default class UpdatePage {
 				this.lookingForInput.value,
 				this.selectedUser.image
 			);
-			router.navigateTo("#/", { users: users });
+			router.navigateTo("/", { users: users });
 			loader.hide();
 		}
 	}

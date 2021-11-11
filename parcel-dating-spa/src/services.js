@@ -1,7 +1,7 @@
 class Services {
 	constructor() {
 		this.users = [];
-		this.baseUrl = "http://localhost:3000/user-service/userService.php";
+		this.baseUrl = "http://localhost:3000/user-service/";
 		this.selectedUserId;
 	}
 
@@ -14,18 +14,17 @@ class Services {
 	}
 
 	async getMatches(userId) {
-		const url = `${this.baseUrl}?action=getMatches&userid=${userId}`;
+		const url = `${this.baseUrl}?action=getMatches&userId=${userId}`;
 		const response = await fetch(url);
 		const data = await response.json();
 		return data;
 	}
 
 	async getUser(userId) {
-		console.log(userId, `${this.baseUrl}?action=getUser&userid=${userId}`);
-		const url = `${this.baseUrl}?action=getUser&userid=${userId}`;
+		console.log(userId, `${this.baseUrl}?action=getUser&userId=${userId}`);
+		const url = `${this.baseUrl}?action=getUser&userId=${userId}`;
 		const response = await fetch(url);
 		const user = await response.json();
-		console.log(user);
 		return user;
 	}
 
@@ -35,9 +34,6 @@ class Services {
 
 		const response = await fetch(`${this.baseUrl}?action=uploadImage`, {
 			method: "POST",
-			headers: {
-				"Access-Control-Allow-Headers": "Content-Type",
-			},
 			body: formData,
 		});
 		// waiting for the result
@@ -46,9 +42,8 @@ class Services {
 	}
 
 	async deleteUser(userId) {
-		const response = await fetch(`${this.baseUrl}?action=deleteUser&userid=${userId}`, {
+		const response = await fetch(`${this.baseUrl}?action=deleteUser&userId=${userId}`, {
 			method: "DELETE",
-			headers: { "Content-Type": "application/json; charset=utf-8" },
 		});
 		// waiting for the result
 		const result = await response.json();
@@ -73,7 +68,6 @@ class Services {
 		// post new user to php userService using fetch(...)
 		const response = await fetch(this.baseUrl + "?action=createUser", {
 			method: "POST",
-			headers: { "Content-Type": "application/json; charset=utf-8" },
 			body: JSON.stringify(newUser), // parsing js object to json object
 		});
 		// waiting for the result
@@ -97,7 +91,6 @@ class Services {
 		// put user to php userService using fetch(...)
 		const response = await fetch(this.baseUrl + "?action=updateUser", {
 			method: "PUT",
-			headers: { "Content-Type": "application/json; charset=utf-8" },
 			body: JSON.stringify(userToUpdate), // parsing js object to json object
 		});
 		// waiting for the result

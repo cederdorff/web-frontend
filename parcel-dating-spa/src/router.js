@@ -7,19 +7,19 @@ class Router {
 	constructor() {
 		this.routes = [
 			{
-				path: "#/",
+				path: "/",
 				view: new UsersPage("users"),
 			},
 			{
-				path: "#/create",
+				path: "/create",
 				view: new CreatePage("create"),
 			},
 			{
-				path: "#/update/:id",
+				path: "/update/:id",
 				view: new UpdatePage("update"),
 			},
 			{
-				path: "#/user/:id",
+				path: "/user/:id",
 				view: new UserProfilePage("profile"),
 			},
 		];
@@ -41,12 +41,12 @@ class Router {
 	/**
 	 * Navigating SPA to specific page by given path
 	 */
-	navigateTo(path, params = {}) {
-		window.history.pushState({}, path, this.basePath + path);
+	navigateTo(path, params) {
+		window.history.pushState({}, path, path);
 		this.showPage(path, params);
 	}
 
-	showPage(path, params) {
+	showPage(path, params = {}) {
 		this.hideAllPages(); // hide all pages
 		const route = this.matchRoute(path, params);
 		route.view.beforeShow(params);
@@ -108,8 +108,8 @@ class Router {
 		this.pages = document.querySelectorAll(".page");
 		this.navLinks = document.querySelectorAll("nav a");
 		this.attachNavLinkEvents();
-		window.addEventListener("popstate", () => this.showPage(location.hash)); // change page when using back and forth in browser
-		this.navigateTo(location.hash);
+		window.addEventListener("popstate", () => this.showPage(location.pathname)); // change page when using back and forth in browser
+		this.navigateTo(location.pathname);
 	}
 }
 
