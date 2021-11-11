@@ -62,7 +62,6 @@ class Service {
 			lookingFor,
 			image,
 		};
-		console.log(newUser);
 
 		// post new user to php userService using fetch(...)
 		const response = await fetch(this.baseUrl + "?action=createUser", {
@@ -73,7 +72,6 @@ class Service {
 		const result = await response.json();
 		// the result is the new updated users array
 		this.users = result;
-		console.log(result);
 		return this.users;
 	}
 
