@@ -77,7 +77,7 @@ class Services {
 			body: JSON.stringify(newUser), // parsing js object to json object
 		});
 		// waiting for the result
-		const result = await response.text();
+		const result = await response.json();
 		// the result is the new updated users array
 		this.users = result;
 		console.log(result);
