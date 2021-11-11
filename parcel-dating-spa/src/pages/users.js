@@ -28,7 +28,7 @@ export default class UsersPage {
 		for (const user of users) {
 			htmlTemplate += /*html*/ `
                 <article data-user-id="${user.id}">
-                    <img src="https://web-frontend.cederdorff.com/dating-spa-modules/backend/files/medium/${
+                    <img src="http://localhost:3000/user-service/files/medium/${
 											user.image || "placeholder.jpg"
 										}">
                     <h3>${user.name}</h3>

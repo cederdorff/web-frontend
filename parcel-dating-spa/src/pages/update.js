@@ -99,8 +99,7 @@ export default class UpdatePage {
 			this.nameInput.value &&
 			this.ageInput.value &&
 			this.genderInput.value &&
-			this.lookingForInput.value &&
-			this.imageInput.files[0]
+			this.lookingForInput.value
 		) {
 			return true;
 		} else {
@@ -118,7 +117,9 @@ export default class UpdatePage {
 		this.ageInput.value = this.selectedUser.age;
 		this.genderInput.value = this.selectedUser.gender;
 		this.lookingForInput.value = this.selectedUser.lookingFor;
-		this.imagePreview.src = `backend/files/medium/${this.selectedUser.image || "placeholder.jpg"}`;
+		this.imagePreview.src = `http://localhost:3000/user-service/files/medium/${
+			this.selectedUser.image || "placeholder.jpg"
+		}`;
 		this.imageInput.value = ""; // reset value
 		loader.hide();
 	}

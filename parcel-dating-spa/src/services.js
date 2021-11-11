@@ -1,7 +1,7 @@
 class Services {
 	constructor() {
 		this.users = [];
-		this.baseUrl = "https://web-frontend.cederdorff.com/dating-spa-modules/backend/userService.php";
+		this.baseUrl = "http://localhost:3000/user-service/userService.php";
 		this.selectedUserId;
 	}
 
