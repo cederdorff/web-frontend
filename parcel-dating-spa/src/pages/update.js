@@ -1,4 +1,4 @@
-import services from "../services.js";
+import service from "../service.js";
 import router from "../router.js";
 import loader from "../components/loader.js";
 
@@ -76,12 +76,12 @@ export default class UpdatePage {
 		if (this.validate()) {
 			loader.show();
 			if (this.imageInput.files[0]) {
-				const image = await services.uploadImage(this.imageInput.files[0]);
+				const image = await service.uploadImage(this.imageInput.files[0]);
 				console.log(image);
 				this.selectedUser.image = image.name;
 			}
 
-			const users = await services.updateUser(
+			const users = await service.updateUser(
 				this.selectedUser.id,
 				this.nameInput.value,
 				this.ageInput.value,
@@ -110,14 +110,14 @@ export default class UpdatePage {
 
 	async beforeShow(params) {
 		loader.show();
-		const user = await services.getUser(params.id);
+		const user = await service.getUser(params.id);
 		this.selectedUser = user;
 
 		this.nameInput.value = this.selectedUser.name;
 		this.ageInput.value = this.selectedUser.age;
 		this.genderInput.value = this.selectedUser.gender;
 		this.lookingForInput.value = this.selectedUser.lookingFor;
-		this.imagePreview.src = `${services.baseUrl}/files/medium/${
+		this.imagePreview.src = `${service.baseUrl}/files/medium/${
 			this.selectedUser.image || "placeholder.jpg"
 		}`;
 		this.imageInput.value = ""; // reset value

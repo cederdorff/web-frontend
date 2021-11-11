@@ -1,6 +1,6 @@
 import loader from "../components/loader.js";
 import router from "../router.js";
-import services from "../services.js";
+import service from "../service.js";
 
 export default class UsersPage {
 	constructor(id) {
@@ -28,7 +28,7 @@ export default class UsersPage {
 		for (const user of users) {
 			htmlTemplate += /*html*/ `
                 <article data-user-id="${user.id}">
-                    <img src="${services.baseUrl}/files/medium/${user.image || "placeholder.jpg"}">
+                    <img src="${service.baseUrl}/files/medium/${user.image || "placeholder.jpg"}">
                     <h3>${user.name}</h3>
                     <p>Age: ${user.age}, Gender: ${user.gender}, Looking for: ${user.lookingFor}</p>
                 </article>
@@ -40,7 +40,7 @@ export default class UsersPage {
 
 	async init() {
 		loader.show();
-		const users = await services.getUsers();
+		const users = await service.getUsers();
 		this.appendUsers(users);
 		loader.hide();
 	}

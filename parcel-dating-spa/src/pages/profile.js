@@ -1,6 +1,6 @@
 import loader from "../components/loader.js";
 import router from "../router.js";
-import services from "../services.js";
+import service from "../service.js";
 
 export default class UserProfilePage {
 	constructor(id) {
@@ -28,7 +28,7 @@ export default class UserProfilePage {
 	appendUserData() {
 		let htmlTemplate = /*html*/ `
             <article class="selectedUser">
-            <img src="${services.baseUrl}/files/medium/${
+            <img src="${service.baseUrl}/files/medium/${
 			this.selectedUser.image || "placeholder.jpg"
 		}">
                 <h3>${this.selectedUser.name}</h3>
@@ -42,7 +42,7 @@ export default class UserProfilePage {
 		for (const user of this.matches) {
 			htmlTemplate += /*html*/ `
             <article data-user-id="${user.id}">
-                <img src="${services.baseUrl}/files/medium/${user.image || "placeholder.jpg"}">
+                <img src="${service.baseUrl}/files/medium/${user.image || "placeholder.jpg"}">
                 <h3>${user.name}</h3>
                 <p>Age: ${user.age}, Gender: ${user.gender}</p>
             </article>
@@ -78,7 +78,7 @@ export default class UserProfilePage {
 
 		if (deleteUser) {
 			loader.show();
-			const users = await services.deleteUser(this.selectedUser.id);
+			const users = await service.deleteUser(this.selectedUser.id);
 			router.navigateTo("/", {
 				users: users,
 			});
@@ -88,8 +88,8 @@ export default class UserProfilePage {
 
 	async beforeShow(params) {
 		loader.show();
-		this.selectedUser = await services.getUser(params.id);
-		this.matches = await services.getMatches(params.id);
+		this.selectedUser = await service.getUser(params.id);
+		this.matches = await service.getMatches(params.id);
 		this.appendUserData();
 		loader.hide();
 	}

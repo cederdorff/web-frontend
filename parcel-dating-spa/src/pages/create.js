@@ -1,6 +1,6 @@
 import loader from "../components/loader.js";
 import router from "../router.js";
-import services from "../services.js";
+import service from "../service.js";
 
 export default class CreatePage {
 	constructor(id) {
@@ -71,8 +71,8 @@ export default class CreatePage {
 	async create() {
 		if (this.validate()) {
 			loader.show();
-			const image = await services.uploadImage(this.imageInput.files[0]);
-			const users = await services.createUser(
+			const image = await service.uploadImage(this.imageInput.files[0]);
+			const users = await service.createUser(
 				this.nameInput.value,
 				this.ageInput.value,
 				this.genderInput.value,

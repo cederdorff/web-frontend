@@ -1,4 +1,4 @@
-class Services {
+class Service {
 	constructor() {
 		this.users = [];
 		this.baseUrl = "http://localhost:3000/user-service/";
@@ -100,5 +100,5 @@ class Services {
 	}
 }
 
-const services = new Services();
-export default services;
+const service = new Service();
+export default service;
