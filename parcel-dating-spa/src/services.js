@@ -5,6 +5,10 @@ class Services {
 		this.selectedUserId;
 	}
 
+	getBaseUrl() {
+		return this.baseUrl;
+	}
+
 	async getUsers() {
 		const url = `${this.baseUrl}?action=getUsers`;
 		const response = await fetch(url);

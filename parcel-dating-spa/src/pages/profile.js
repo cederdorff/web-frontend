@@ -28,9 +28,9 @@ export default class UserProfilePage {
 	appendUserData() {
 		let htmlTemplate = /*html*/ `
             <article class="selectedUser">
-            <img src="http://localhost:3000/user-service/files/medium/${
-							this.selectedUser.image || "placeholder.jpg"
-						}">
+            <img src="${services.baseUrl}/files/medium/${
+			this.selectedUser.image || "placeholder.jpg"
+		}">
                 <h3>${this.selectedUser.name}</h3>
                 <p>Age: ${this.selectedUser.age}, Gender: ${this.selectedUser.gender}</p>
                 <p>Number of matches: ${this.matches.length}</p>
@@ -42,9 +42,7 @@ export default class UserProfilePage {
 		for (const user of this.matches) {
 			htmlTemplate += /*html*/ `
             <article data-user-id="${user.id}">
-                <img src="http://localhost:3000/user-service/files/medium/${
-									user.image || "placeholder.jpg"
-								}">
+                <img src="${services.baseUrl}/files/medium/${user.image || "placeholder.jpg"}">
                 <h3>${user.name}</h3>
                 <p>Age: ${user.age}, Gender: ${user.gender}</p>
             </article>
