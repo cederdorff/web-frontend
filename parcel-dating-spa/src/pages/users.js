@@ -17,7 +17,7 @@ export default class UsersPage {
                 <header class="topbar">
                     <h2>Users</h2>
                 </header>
-                <section id="grid-users" class="grid-container"></section>
+                <section class="users-grid grid-container"></section>
             </section>
         `
 		);
@@ -34,7 +34,7 @@ export default class UsersPage {
                 </article>
             `;
 		}
-		document.querySelector("#grid-users").innerHTML = htmlTemplate;
+		document.querySelector(`#${this.id} .users-grid`).innerHTML = htmlTemplate;
 		this.attachEvents();
 	}
 
@@ -54,9 +54,9 @@ export default class UsersPage {
 		});
 	}
 
-	beforeShow(params) {
-		if (params.users) {
-			this.appendUsers(params.users);
+	beforeShow(props) {
+		if (props.users) {
+			this.appendUsers(props.users);
 		}
 	}
 }

@@ -86,10 +86,10 @@ export default class UserProfilePage {
 		}
 	}
 
-	async beforeShow(params) {
+	async beforeShow(props) {
 		loader.show();
-		this.selectedUser = await service.getUser(params.id);
-		this.matches = await service.getMatches(params.id);
+		this.selectedUser = await service.getUser(props.id);
+		this.matches = await service.getMatches(props.id);
 		this.appendUserData();
 		loader.hide();
 	}

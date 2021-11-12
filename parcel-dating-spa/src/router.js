@@ -40,25 +40,25 @@ class Router {
 	/**
 	 * Navigating SPA to specific page by given path
 	 */
-	navigateTo(path, params) {
+	navigateTo(path, props) {
 		window.history.pushState({}, path, path);
-		this.showPage(path, params);
+		this.showPage(path, props);
 	}
 
-	showPage(path, params = {}) {
+	showPage(path, props = {}) {
 		this.hideAllPages(); // hide all pages
-		const route = this.matchRoute(path, params);
-		route.view.beforeShow(params);
+		const route = this.matchRoute(path, props);
+		route.view.beforeShow(props);
 		document.getElementById(route.view.id).style.display = "block";
 		this.setActiveTab(route.path);
 	}
 
-	matchRoute(path, params) {
+	matchRoute(path, props) {
 		const route = this.routes.find(route => {
 			if (route.path.includes("/:id")) {
 				const mainRoute = route.path.split("/:id")[0];
 				if (path.includes(mainRoute)) {
-					params.id = path.split("/").pop();
+					props.id = path.split("/").pop();
 					return route;
 				}
 			} else if (route.path.includes(path)) {

@@ -99,7 +99,7 @@ export default class CreatePage {
 		}
 	}
 
-	beforeShow(params) {
-		console.log(params);
+	beforeShow(props) {
+		console.log(props);
 	}
 }

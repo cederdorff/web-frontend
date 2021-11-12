@@ -33,6 +33,9 @@ class Service {
 
 		const response = await fetch(`${this.baseUrl}?action=uploadImage`, {
 			method: "POST",
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
 			body: formData,
 		});
 		// waiting for the result

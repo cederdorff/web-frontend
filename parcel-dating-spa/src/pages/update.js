@@ -108,9 +108,9 @@ export default class UpdatePage {
 		}
 	}
 
-	async beforeShow(params) {
+	async beforeShow(props) {
 		loader.show();
-		const user = await service.getUser(params.id);
+		const user = await service.getUser(props.id);
 		this.selectedUser = user;
 
 		this.nameInput.value = this.selectedUser.name;
