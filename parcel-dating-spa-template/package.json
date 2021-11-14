@@ -1,0 +1,12 @@
+{
+  "name": "dating-spa",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel",
+    "run": "parcel --open",
+    "build": "parcel build"
+  },
+  "devDependencies": {
+    "parcel": "^2.0.1"
+  }
+}
