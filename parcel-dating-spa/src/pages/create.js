@@ -17,6 +17,10 @@ export default class CreatePage {
 		this.attachEvents();
 	}
 
+	/**
+	 * renders the initial HTML template of the page.
+	 * It is using insertAdjacentHTML, which is another way of adding text as HTML to the DOM (read more here: https://www.w3schools.com/jsref/met_node_insertadjacenthtml.asp).
+	 */
 	render() {
 		document.querySelector("#root").insertAdjacentHTML(
 			"beforeend",
@@ -51,10 +55,12 @@ export default class CreatePage {
         `
 		);
 	}
-
+	/**
+	 * attaching events to DOM elements.
+	 */
 	attachEvents() {
-		this.imageInput.onchange = () => this.previewImage();
-		document.querySelector(`#${this.id} .save`).onclick = () => this.create();
+		this.imageInput.onchange = () => this.previewImage(); // on change event on the input file (image) field
+		document.querySelector(`#${this.id} .save`).onclick = () => this.create(); // on click event for save button
 	}
 
 	previewImage() {

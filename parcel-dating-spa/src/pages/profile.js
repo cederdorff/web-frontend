@@ -10,6 +10,10 @@ export default class UserProfilePage {
 		this.render();
 	}
 
+	/**
+	 * renders the initial HTML template of the page.
+	 * It is using insertAdjacentHTML, which is another way of adding text as HTML to the DOM (read more here: https://www.w3schools.com/jsref/met_node_insertadjacenthtml.asp).
+	 */
 	render() {
 		document.querySelector("#root").insertAdjacentHTML(
 			"beforeend",
@@ -55,15 +59,17 @@ export default class UserProfilePage {
 		this.attachEvents();
 	}
 
+	/**
+	 * attaching events to DOM elements.
+	 */
 	attachEvents() {
-		document.querySelector(`#${this.id} .back`).onclick = () => router.navigateTo("/");
+		document.querySelector(`#${this.id} .back`).onclick = () => router.navigateTo("/"); // on click add to back button
 
 		document.querySelectorAll(`#${this.id} [data-user-id]`).forEach(element => {
+			// adds .onclick for every user calling router.navigateTo(...) with the id of the user.
 			element.onclick = () => {
 				const userId = element.getAttribute("data-user-id");
-				router.navigateTo(`/user/${userId}`, {
-					userId: userId,
-				});
+				router.navigateTo(`/user/${userId}`);
 			};
 		});
 
@@ -80,12 +86,20 @@ export default class UserProfilePage {
 			loader.show();
 			const users = await service.deleteUser(this.selectedUser.id);
 			router.navigateTo("/", {
-				users: users,
+				users: users
 			});
 			loader.hide();
 		}
 	}
 
+	/**
+	 * beforeShow is called by the router every time the page is going to be displayed.
+	 * beforeShow is called right before the pages is shown and you can call methods you
+	 * like to be executed every time the page is shown.
+	 * in the case i'm getting the user id from the passed props
+	 * the user id is used to get user info, service.getUser(props.id), and
+	 * matches, service.getMatches(props.id), from the imported service
+	 */
 	async beforeShow(props) {
 		loader.show();
 		this.selectedUser = await service.getUser(props.id);

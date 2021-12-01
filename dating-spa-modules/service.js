@@ -1,10 +1,13 @@
-class Services {
+class Service {
 	constructor() {
 		this.users = [];
-		this.baseUrl = "backend/userService.php";
+		this.baseUrl = "https://web-frontend.cederdorff.com/user-service/";
 		this.selectedUserId;
 	}
 
+	/**
+	 * fetch and return all users from backend service
+	 */
 	async getUsers() {
 		const url = `${this.baseUrl}?action=getUsers`;
 		const response = await fetch(url);
@@ -13,15 +16,18 @@ class Services {
 		return this.users;
 	}
 
+	/**
+	 * fetch and return all matches based
+	 */
 	async getMatches(userId) {
-		const url = `${this.baseUrl}?action=getMatches&userid=${userId}`;
+		const url = `${this.baseUrl}?action=getMatches&userId=${userId}`;
 		const response = await fetch(url);
 		const data = await response.json();
 		return data;
 	}
 
 	async getUser(userId) {
-		const url = `${this.baseUrl}?action=getUser&userid=${userId}`;
+		const url = `${this.baseUrl}?action=getUser&userId=${userId}`;
 		const response = await fetch(url);
 		const user = await response.json();
 		return user;
@@ -34,9 +40,9 @@ class Services {
 		const response = await fetch(`${this.baseUrl}?action=uploadImage`, {
 			method: "POST",
 			headers: {
-				"Access-Control-Allow-Headers": "Content-Type",
+				"Content-Type": "application/x-www-form-urlencoded"
 			},
-			body: formData,
+			body: formData
 		});
 		// waiting for the result
 		const result = await response.json();
@@ -44,9 +50,8 @@ class Services {
 	}
 
 	async deleteUser(userId) {
-		const response = await fetch(`${this.baseUrl}?action=deleteUser&userid=${userId}`, {
-			method: "DELETE",
-			headers: { "Content-Type": "application/json; charset=utf-8" },
+		const response = await fetch(`${this.baseUrl}?action=deleteUser&userId=${userId}`, {
+			method: "DELETE"
 		});
 		// waiting for the result
 		const result = await response.json();
@@ -64,15 +69,13 @@ class Services {
 			age,
 			gender,
 			lookingFor,
-			image,
+			image
 		};
-		console.log(newUser);
 
 		// post new user to php userService using fetch(...)
 		const response = await fetch(this.baseUrl + "?action=createUser", {
 			method: "POST",
-			headers: { "Content-Type": "application/json; charset=utf-8" },
-			body: JSON.stringify(newUser), // parsing js object to json object
+			body: JSON.stringify(newUser) // parsing js object to json object
 		});
 		// waiting for the result
 		const result = await response.json();
@@ -89,13 +92,12 @@ class Services {
 			age,
 			gender,
 			lookingFor,
-			image,
+			image
 		};
 		// put user to php userService using fetch(...)
 		const response = await fetch(this.baseUrl + "?action=updateUser", {
 			method: "PUT",
-			headers: { "Content-Type": "application/json; charset=utf-8" },
-			body: JSON.stringify(userToUpdate), // parsing js object to json object
+			body: JSON.stringify(userToUpdate) // parsing js object to json object
 		});
 		// waiting for the result
 		const result = await response.json();
@@ -105,5 +107,5 @@ class Services {
 	}
 }
 
-const services = new Services();
-export default services;
+const service = new Service();
+export default service;

@@ -26,6 +26,7 @@ class Router {
 		//declaring properties: pages and navLinks. Initialised in init().
 		this.pages;
 		this.navLinks;
+		this.basePath = location.pathname.replace("index.html", "");
 	}
 
 	/**

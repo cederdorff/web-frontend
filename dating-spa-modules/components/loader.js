@@ -3,7 +3,9 @@ class Loader {
 		this.render();
 		this.loader = document.querySelector(".loader");
 	}
-
+	/**
+	 * renders the initial template of the page
+	 */
 	render() {
 		document.querySelector("#root").insertAdjacentHTML(
 			"beforeend",

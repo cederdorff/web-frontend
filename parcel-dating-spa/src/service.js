@@ -1,10 +1,13 @@
 class Service {
 	constructor() {
 		this.users = [];
-		this.baseUrl = "http://localhost:3000/user-service/";
+		this.baseUrl = "https://web-frontend.cederdorff.com/user-service/";
 		this.selectedUserId;
 	}
 
+	/**
+	 * fetch and return all users from backend service
+	 */
 	async getUsers() {
 		const url = `${this.baseUrl}?action=getUsers`;
 		const response = await fetch(url);
@@ -13,6 +16,9 @@ class Service {
 		return this.users;
 	}
 
+	/**
+	 * fetch and return all matches based
+	 */
 	async getMatches(userId) {
 		const url = `${this.baseUrl}?action=getMatches&userId=${userId}`;
 		const response = await fetch(url);
@@ -34,9 +40,9 @@ class Service {
 		const response = await fetch(`${this.baseUrl}?action=uploadImage`, {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/x-www-form-urlencoded",
+				"Content-Type": "application/x-www-form-urlencoded"
 			},
-			body: formData,
+			body: formData
 		});
 		// waiting for the result
 		const result = await response.json();
@@ -45,7 +51,7 @@ class Service {
 
 	async deleteUser(userId) {
 		const response = await fetch(`${this.baseUrl}?action=deleteUser&userId=${userId}`, {
-			method: "DELETE",
+			method: "DELETE"
 		});
 		// waiting for the result
 		const result = await response.json();
@@ -63,13 +69,13 @@ class Service {
 			age,
 			gender,
 			lookingFor,
-			image,
+			image
 		};
 
 		// post new user to php userService using fetch(...)
 		const response = await fetch(this.baseUrl + "?action=createUser", {
 			method: "POST",
-			body: JSON.stringify(newUser), // parsing js object to json object
+			body: JSON.stringify(newUser) // parsing js object to json object
 		});
 		// waiting for the result
 		const result = await response.json();
@@ -86,12 +92,12 @@ class Service {
 			age,
 			gender,
 			lookingFor,
-			image,
+			image
 		};
 		// put user to php userService using fetch(...)
 		const response = await fetch(this.baseUrl + "?action=updateUser", {
 			method: "PUT",
-			body: JSON.stringify(userToUpdate), // parsing js object to json object
+			body: JSON.stringify(userToUpdate) // parsing js object to json object
 		});
 		// waiting for the result
 		const result = await response.json();

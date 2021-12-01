@@ -1,6 +1,6 @@
 import loader from "../components/loader.js";
 import router from "../router.js";
-import services from "../services.js";
+import service from "../service.js";
 
 export default class UserProfilePage {
 	constructor(id) {
@@ -10,6 +10,10 @@ export default class UserProfilePage {
 		this.render();
 	}
 
+	/**
+	 * renders the initial HTML template of the page.
+	 * It is using insertAdjacentHTML, which is another way of adding text as HTML to the DOM (read more here: https://www.w3schools.com/jsref/met_node_insertadjacenthtml.asp).
+	 */
 	render() {
 		document.querySelector("#root").insertAdjacentHTML(
 			"beforeend",
@@ -28,7 +32,9 @@ export default class UserProfilePage {
 	appendUserData() {
 		let htmlTemplate = /*html*/ `
             <article class="selectedUser">
-            <img src="backend/files/medium/${this.selectedUser.image || "placeholder.jpg"}">
+            <img src="${service.baseUrl}/files/medium/${
+			this.selectedUser.image || "placeholder.jpg"
+		}">
                 <h3>${this.selectedUser.name}</h3>
                 <p>Age: ${this.selectedUser.age}, Gender: ${this.selectedUser.gender}</p>
                 <p>Number of matches: ${this.matches.length}</p>
@@ -40,7 +46,7 @@ export default class UserProfilePage {
 		for (const user of this.matches) {
 			htmlTemplate += /*html*/ `
             <article data-user-id="${user.id}">
-                <img src="backend/files/medium/${user.image || "placeholder.jpg"}">
+                <img src="${service.baseUrl}/files/medium/${user.image || "placeholder.jpg"}">
                 <h3>${user.name}</h3>
                 <p>Age: ${user.age}, Gender: ${user.gender}</p>
             </article>
@@ -53,20 +59,22 @@ export default class UserProfilePage {
 		this.attachEvents();
 	}
 
+	/**
+	 * attaching events to DOM elements.
+	 */
 	attachEvents() {
-		document.querySelector(`#${this.id} .back`).onclick = () => router.navigateTo("#/");
+		document.querySelector(`#${this.id} .back`).onclick = () => router.navigateTo("/"); // on click add to back button
 
 		document.querySelectorAll(`#${this.id} [data-user-id]`).forEach(element => {
+			// adds .onclick for every user calling router.navigateTo(...) with the id of the user.
 			element.onclick = () => {
 				const userId = element.getAttribute("data-user-id");
-				router.navigateTo(`#/user/${userId}`, {
-					userId: userId,
-				});
+				router.navigateTo(`/user/${userId}`);
 			};
 		});
 
 		document.querySelector(`#${this.id} .update`).onclick = () =>
-			router.navigateTo(`#/update/${this.selectedUser.id}`);
+			router.navigateTo(`/update/${this.selectedUser.id}`);
 
 		document.querySelector(`#${this.id} .delete`).onclick = () => this.showDeleteDialog();
 	}
@@ -76,18 +84,26 @@ export default class UserProfilePage {
 
 		if (deleteUser) {
 			loader.show();
-			const users = await services.deleteUser(this.selectedUser.id);
-			router.navigateTo("#/", {
-				users: users,
+			const users = await service.deleteUser(this.selectedUser.id);
+			router.navigateTo("/", {
+				users: users
 			});
 			loader.hide();
 		}
 	}
 
-	async beforeShow(params) {
+	/**
+	 * beforeShow is called by the router every time the page is going to be displayed.
+	 * beforeShow is called right before the pages is shown and you can call methods you
+	 * like to be executed every time the page is shown.
+	 * in the case i'm getting the user id from the passed props
+	 * the user id is used to get user info, service.getUser(props.id), and
+	 * matches, service.getMatches(props.id), from the imported service
+	 */
+	async beforeShow(props) {
 		loader.show();
-		this.selectedUser = await services.getUser(params.id);
-		this.matches = await services.getMatches(params.id);
+		this.selectedUser = await service.getUser(props.id);
+		this.matches = await service.getMatches(props.id);
 		this.appendUserData();
 		loader.hide();
 	}

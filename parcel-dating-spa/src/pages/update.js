@@ -18,6 +18,10 @@ export default class UpdatePage {
 		this.attachEvents();
 	}
 
+	/**
+	 * renders the initial HTML template of the page.
+	 * It is using insertAdjacentHTML, which is another way of adding text as HTML to the DOM (read more here: https://www.w3schools.com/jsref/met_node_insertadjacenthtml.asp).
+	 */
 	render() {
 		document.querySelector("#root").insertAdjacentHTML(
 			"beforeend",
@@ -55,6 +59,9 @@ export default class UpdatePage {
 		);
 	}
 
+	/**
+	 * attaching events to DOM elements.
+	 */
 	attachEvents() {
 		document.querySelector(`#${this.id} .cancel`).onclick = () => router.goBack();
 		document.querySelector(`#${this.id} .save`).onclick = () => this.save();
@@ -72,15 +79,17 @@ export default class UpdatePage {
 		}
 	}
 
+	//called by the save button - saves the user info
 	async save() {
+		// validate input fields before save
 		if (this.validate()) {
 			loader.show();
 			if (this.imageInput.files[0]) {
+				//also check image file and upload if new file
 				const image = await service.uploadImage(this.imageInput.files[0]);
-				console.log(image);
 				this.selectedUser.image = image.name;
 			}
-
+			//update user through the service
 			const users = await service.updateUser(
 				this.selectedUser.id,
 				this.nameInput.value,
@@ -89,11 +98,16 @@ export default class UpdatePage {
 				this.lookingForInput.value,
 				this.selectedUser.image
 			);
-			router.navigateTo(`/user/${this.selectedUser.id}`, { users: users });
+			//navigate to user profile page
+			router.navigateTo(`/user/${this.selectedUser.id}`);
 			loader.hide();
 		}
 	}
 
+	/**
+	 * if name, age, gender and looking return true
+	 * else display alert and return false
+	 */
 	validate() {
 		if (
 			this.nameInput.value &&
@@ -107,6 +121,15 @@ export default class UpdatePage {
 			return false;
 		}
 	}
+
+	/**
+	 * beforeShow is called by the router every time the page is going to be displayed.
+	 * beforeShow is called right before the pages is shown and you can call methods you
+	 * like to be executed every time the page is shown.
+	 * in the case i'm getting the user id from the passed props
+	 * the user id is used to get user info, service.getUser(props.id).
+	 * by that i'm able to set the field values with the properties of the "user to update".
+	 */
 
 	async beforeShow(props) {
 		loader.show();

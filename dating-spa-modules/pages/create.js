@@ -1,6 +1,6 @@
 import loader from "../components/loader.js";
 import router from "../router.js";
-import services from "../services.js";
+import service from "../service.js";
 
 export default class CreatePage {
 	constructor(id) {
@@ -17,13 +17,17 @@ export default class CreatePage {
 		this.attachEvents();
 	}
 
+	/**
+	 * renders the initial HTML template of the page.
+	 * It is using insertAdjacentHTML, which is another way of adding text as HTML to the DOM (read more here: https://www.w3schools.com/jsref/met_node_insertadjacenthtml.asp).
+	 */
 	render() {
 		document.querySelector("#root").insertAdjacentHTML(
 			"beforeend",
 			/*html*/ `
             <section id="${this.id}" class="page">
                 <header class="topbar">
-                    <a href="#/" class="router-link left">Cancel</a>
+                    <a href="/" class="router-link left">Cancel</a>
                     <h2>Create new user</h2>
                 </header>
                 <section>
@@ -51,10 +55,12 @@ export default class CreatePage {
         `
 		);
 	}
-
+	/**
+	 * attaching events to DOM elements.
+	 */
 	attachEvents() {
-		this.imageInput.onchange = () => this.previewImage();
-		document.querySelector(`#${this.id} .save`).onclick = () => this.create();
+		this.imageInput.onchange = () => this.previewImage(); // on change event on the input file (image) field
+		document.querySelector(`#${this.id} .save`).onclick = () => this.create(); // on click event for save button
 	}
 
 	previewImage() {
@@ -71,15 +77,15 @@ export default class CreatePage {
 	async create() {
 		if (this.validate()) {
 			loader.show();
-			const image = await services.uploadImage(this.imageInput.files[0]);
-			const users = await services.createUser(
+			const image = await service.uploadImage(this.imageInput.files[0]);
+			const users = await service.createUser(
 				this.nameInput.value,
 				this.ageInput.value,
 				this.genderInput.value,
 				this.lookingForInput.value,
 				image.name
 			);
-			router.navigateTo("#/", { users: users });
+			router.navigateTo("/", { users: users });
 			loader.hide();
 		}
 	}
@@ -99,7 +105,7 @@ export default class CreatePage {
 		}
 	}
 
-	beforeShow(params) {
-		console.log(params);
+	beforeShow(props) {
+		console.log(props);
 	}
 }
