@@ -67,6 +67,8 @@ class Router {
 
 	/**
 	 * returns a route from this.routes matching the path name
+	 * DON'T OVERTHINK THIS FUNCTION. It is a way to get at route
+	 * based on the path.
 	 */
 	matchRoute(path, props) {
 		const route = this.routes.find(route => {
