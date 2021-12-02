@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Single Page Application - RACE</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Get started with HTML, CSS and JavaScript">
+  <meta name="author" content="Rasmus Cederdorff">
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="shortcut icon" type="image/png" href="./img/favicon.png" />
+
+</head>
+
+<body>
+  <!-------------- Navigation -------------->
+  <nav class="tabbar">
+    <a class="nav-link" href="#/">Home</a>
+    <a class="nav-link" href="#/profile">Profile</a>
+  </nav>
+
+  <main id="appRoot">
+    <!-------------- Pages -------------->
+
+    <!-- login page -->
+    <section id="login" class="page">
+      <header class="topbar">
+        <h2>Login</h2>
+      </header>
+      <p>My Single Page Web App Login Screen</p>
+      <p class="login-message"></p>
+      <form>
+        <input id="login-username" type="text" placeholder="Type username">
+        <input id="login-password" type="password" placeholder="Password">
+        <button type="button" id="btn-login">Login</button>
+      </form>
+      <p><a class="nav-link" href="#/signup">Go to Sign up</a></p>
+
+    </section>
+
+    <!-- signup page -->
+    <section id="signup" class="page">
+      <header class="topbar">
+        <h2>Sign Up</h2>
+      </header>
+      <p>Sign up</p>
+      <p class="signup-message"></p>
+      <form>
+        <input id="signup-firstname" type="text" name="firstname" placeholder="Type firstname">
+        <input id="signup-lastname" type="text" name="lastname" placeholder="Type lastname">
+        <input id="signup-age" type="number" name="age" placeholder="Type age">
+        <select id="signup-gender" name="gender">
+          <option value="" disabled selected>Choose Gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+
+        <input id="signup-username" type="text" placeholder="Type username" autocomplete="new-username">
+        <input id="signup-password" type="password" placeholder="Password" autocomplete="new-password">
+        <input id="signup-password-check" type="password" placeholder="Password" autocomplete="new-password">
+
+        <button type="button" id="btn-signup">Sign up</button>
+      </form>
+    </section>
+
+    <!-- home page -->
+    <section id="home" class="page">
+      <header class="topbar">
+        <h2>Home</h2>
+      </header>
+      <p>My Single Page Web App Template</p>
+    </section>
+
+    <!-- profile page -->
+    <section id="profile" class="page">
+      <header class="topbar">
+        <h2>Profile</h2>
+        <a class="right" id="btn-logout">Logout</a>
+      </header>
+      <section id="user-data"></section>
+    </section>
+
+  </main>
+
+  <script src="./js/app.js" type="module"></script>
+</body>
+
+</html>
