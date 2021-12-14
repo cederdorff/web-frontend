@@ -64,12 +64,12 @@ class Service {
 		const id = Date.now(); // dummy generated user id
 		const newUser = {
 			// declaring a new js object with the form values
-			id,
-			name,
-			age,
-			gender,
-			lookingFor,
-			image
+			id: id,
+			name:name,
+			age: age,
+			gender: gender,
+			lookingFor: lookingFor,
+			image: image
 		};
 
 		// post new user to php userService using fetch(...)
