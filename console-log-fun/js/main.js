@@ -29,6 +29,7 @@ const userArray = [
     { name: "Rasmus", birthDate: "1990-03-12" }
 ];
 
+// suggested solution: 1
 function getUsers(users) {
     for (const user of users) {
         const today = new Date();
@@ -41,6 +42,23 @@ function getUsers(users) {
 }
 
 getUsers(userArray);
+
+// suggested solution: 2
+function getUsersHTML(users) {
+    const html = userArray
+        .map(user => {
+            return /*html*/ `
+            <article>
+              <h3>Name: ${user.name}</h3>
+              <p>Birth date: ${user.birthDate}</p>
+            </article>`;
+        })
+        .join("");
+
+    document.querySelector("#content").innerHTML = html;
+}
+
+getUsersHTML(userArray);
 
 /**
  * Write in pure JavaScript a function called shorterThanOrEqual(..., ...)
