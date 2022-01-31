@@ -356,3 +356,4 @@ MigrationBackup/
 */.parcel-cache/*
 */dist/*
 .DS_Store
+.DS_Store
