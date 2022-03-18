@@ -1,4 +1,4 @@
-// Vanilla JS ❤️ 🧡 💛 💚 💙 💜 
+// Vanilla JS ❤️ 🧡 💛 💚 💙 💜
 
 async function getUsers() {
     const response = await fetch("https://cederdorff.github.io/web-frontend/canvas-users/data.json");
@@ -9,8 +9,7 @@ async function getUsers() {
 function appendUsers(users) {
     let htmlTemplate = "";
     for (const user of users) {
-        console.log(user);
-        htmlTemplate += /*html*/`
+        htmlTemplate += /*html*/ `
             <article>
                 <img src="${user.avatar_url}">
                 <h2>${user.name}</h2>
