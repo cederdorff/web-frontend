@@ -1,99 +1,78 @@
-// Vanilla JS ❤️ 🧡 💛 💚 💙 💜 
+// Vanilla JS ❤️ 🧡 💛 💚 💙 💜
 let users = [
     {
-        avatar_url: "https://data.efif.dk/Image/StudSys.ashx?cmd=EAA&key=ccd6629f-904f-4356-b4c3-44d5d52cdc08&Username=eaalaak@students.eaaa.dk",
-        created_at: "2019-08-03T02:26:25+02:00",
-        email: "Lasse_aakjaer@hotmail.com",
+        id: "21628",
+        avatar_url: "https://eaaa.instructure.com/images/thumbnails/781064/vW89KBSTW4XGZu4TRDsCggqiVXVDFanSBEyqQRSr",
+        created_at: "2020-01-18T02:53:30+01:00",
+        email: "eaadimy@students.eaaa.dk",
         enrollment_type: "StudentEnrollment",
-        id: "17636",
-        login_id: "eaalaak@students.eaaa.dk",
-        name: "Lasse Aakjær",
-        short_name: "Lasse Aakjær (EAALAAK)",
-        sortable_name: "Aakjær, Lasse"
+        login_id: "eaadimy@students.eaaa.dk",
+        name: "Diana Riis Myjak Andersen",
+        short_name: "Diana Riis Myjak Andersen (EAADIMY)",
+        sortable_name: "Andersen, Diana Riis Myjak"
     },
     {
-        avatar_url: "https://data.efif.dk/Image/StudSys.ashx?cmd=EAA&key=ccd6629f-904f-4356-b4c3-44d5d52cdc08&Username=eaanean@students.eaaa.dk",
-        created_at: "2019-08-07T02:26:39+02:00",
-        email: "eaanean@students.eaaa.dk",
+        id: "34273",
+        avatar_url: "https://data.efif.dk/Image/StudSys.ashx?cmd=EAA&key=ccd6629f-904f-4356-b4c3-44d5d52cdc08&Username=eaagar@students.eaaa.dk",
+        created_at: "2022-01-15T00:49:18+01:00",
+        email: "eaagar@students.eaaa.dk",
         enrollment_type: "StudentEnrollment",
-        id: "17929",
-        login_id: "eaanean@students.eaaa.dk",
-        name: "Nicklas Eibye Andersen",
-        short_name: "Nicklas Eibye Andersen (EAANEAN)",
-        sortable_name: "Andersen, Nicklas Eibye"
+        login_id: "eaagar@students.eaaa.dk",
+        name: "German Arias Rodriguez",
+        short_name: "German Arias Rodriguez (EAAGAR)",
+        sortable_name: "Arias Rodriguez, German"
     },
     {
-        avatar_url: "https://data.efif.dk/Image/StudSys.ashx?cmd=EAA&key=ccd6629f-904f-4356-b4c3-44d5d52cdc08&Username=eaapipo@students.eaaa.dk",
-        created_at: "2019-08-02T02:26:42+02:00",
-        email: "eaapipo@students.eaaa.dk",
+        id: "33983",
+        avatar_url: "https://eaaa.instructure.com/images/thumbnails/794858/5VQ6bbEBm1nsRBBBfxWKUsIMg3b7ARek9rNkDDeh",
+        created_at: "2021-12-23T00:47:30+01:00",
+        email: "eaahbar@students.eaaa.dk",
         enrollment_type: "StudentEnrollment",
-        id: "17476",
-        login_id: "eaapipo@students.eaaa.dk",
-        name: "Piotr Andrzej Pospiech",
-        short_name: "Piotr Andrzej Pospiech (EAAPIPO)",
-        sortable_name: "Andrzej Pospiech, Piotr"
+        login_id: "eaahbar@students.eaaa.dk",
+        name: "Haya Barakat",
+        short_name: "Haya Barakat (EAAHBAR)",
+        sortable_name: "Barakat, Haya"
     },
     {
-        avatar_url: "https://data.efif.dk/Image/StudSys.ashx?cmd=EAA&key=ccd6629f-904f-4356-b4c3-44d5d52cdc08&Username=eaalbic@students.eaaa.dk",
-        created_at: "2021-08-05T00:58:06+02:00",
-        email: "eaalbic@students.eaaa.dk",
+        id: "33989",
+        avatar_url: "https://data.efif.dk/Image/StudSys.ashx?cmd=EAA&key=ccd6629f-904f-4356-b4c3-44d5d52cdc08&Username=eaadabi@students.eaaa.dk",
+        created_at: "2021-12-23T00:47:42+01:00",
+        email: "eaadabi@students.eaaa.dk",
         enrollment_type: "StudentEnrollment",
-        id: "30257",
-        login_id: "eaalbic@students.eaaa.dk",
-        name: "Lasse Bickmann",
-        short_name: "Lasse Bickmann (EAALBIC)",
-        sortable_name: "Bickmann, Lasse"
+        login_id: "eaadabi@students.eaaa.dk",
+        name: "Daniel Birkus",
+        short_name: "Daniel Birkus (EAADABI)",
+        sortable_name: "Birkus, Daniel"
     },
     {
-        avatar_url: "https://data.efif.dk/Image/StudSys.ashx?cmd=EAA&key=ccd6629f-904f-4356-b4c3-44d5d52cdc08&Username=eaathb@students.eaaa.dk",
-        created_at: "2021-08-05T00:57:51+02:00",
-        email: "eaathb@students.eaaa.dk",
-        enrollment_type: "StudentEnrollment",
-        id: "30252",
-        login_id: "eaathb@students.eaaa.dk",
-        name: "Thomas Hyllegaard Busk",
-        short_name: "Thomas Hyllegaard Busk (EAATHB)",
-        sortable_name: "Busk, Thomas Hyllegaard"
-    },
-    {
-        avatar_url: "https://data.efif.dk/Image/StudSys.ashx?cmd=EAA&key=ccd6629f-904f-4356-b4c3-44d5d52cdc08&Username=eaajnb@students.eaaa.dk",
-        created_at: "2018-08-08T02:10:03+02:00",
-        email: "eaajnb@students.eaaa.dk",
-        enrollment_type: "StudentEnrollment",
-        id: "11879",
-        login_id: "eaajnb@students.eaaa.dk",
-        name: "Jesper Nissen Byg",
-        short_name: "Jesper Nissen Byg (EAAJNB)",
-        sortable_name: "Byg, Jesper Nissen"
-    },
-    {
-        avatar_url: "https://data.efif.dk/Image/StudSys.ashx?cmd=EAA&key=ccd6629f-904f-4356-b4c3-44d5d52cdc08&Username=eaababy@students.eaaa.dk",
-        created_at: "2019-08-07T02:34:15+02:00",
-        email: "eaababy@students.eaaa.dk",
-        enrollment_type: "StudentEnrollment",
-        id: "17960",
-        login_id: "eaababy@students.eaaa.dk",
-        name: "Barbora Byrtusová",
-        short_name: "Barbora Byrtusová (EAABABY)",
-        sortable_name: "Byrtusová, Barbora"
-    },
-    {
-        avatar_url: "https://eaaa.instructure.com/images/thumbnails/649049/1EeRFv7jyMzdBXE1mMXSf9dAiRRPVSWAbcBl60Ou",
+        id: "14427",
+        avatar_url: "https://eaaa.instructure.com/images/thumbnails/760199/Ugh7nX072ONnxJ26tfMmAkFxwfRLBywUBHNy25mK",
         created_at: "2018-09-06T02:23:57+02:00",
         email: "race@eaaa.dk",
         enrollment_type: "TeacherEnrollment",
-        id: "14427",
         login_id: "race@eaaa.dk",
         name: "Rasmus Cederdorff",
-        short_name: "Rasmus Cederdorff (adjunkt – race@eaaa.dk)",
+        short_name: "Rasmus Cederdorff (lektor – race@eaaa.dk)",
         sortable_name: "Cederdorff, Rasmus"
-    }];
+    },
+    {
+        id: "33982",
+        avatar_url: "https://data.efif.dk/Image/StudSys.ashx?cmd=EAA&key=ccd6629f-904f-4356-b4c3-44d5d52cdc08&Username=eaanac@students.eaaa.dk",
+        created_at: "2021-12-23T00:47:27+01:00",
+        email: "eaanac@students.eaaa.dk",
+        enrollment_type: "StudentEnrollment",
+        login_id: "eaanac@students.eaaa.dk",
+        name: "Nicklas Andié Christensen",
+        short_name: "Nicklas Andié Christensen (EAANAC)",
+        sortable_name: "Christensen, Nicklas Andié"
+    }
+];
 
 function appendUsers(users) {
     let htmlTemplate = "";
     for (const user of users) {
         console.log(user);
-        htmlTemplate += /*html*/`
+        htmlTemplate += /*html*/ `
             <article>
                 <img src="${user.avatar_url}">
                 <h2>${user.name}</h2>
