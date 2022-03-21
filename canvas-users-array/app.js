@@ -34,17 +34,6 @@ let users = [
         sortable_name: "Andrzej Pospiech, Piotr"
     },
     {
-        avatar_url: "https://data.efif.dk/Image/StudSys.ashx?cmd=EAA&key=ccd6629f-904f-4356-b4c3-44d5d52cdc08&Username=eaalbic@students.eaaa.dk",
-        created_at: "2021-08-05T00:58:06+02:00",
-        email: "eaalbic@students.eaaa.dk",
-        enrollment_type: "StudentEnrollment",
-        id: "30257",
-        login_id: "eaalbic@students.eaaa.dk",
-        name: "Lasse Bickmann",
-        short_name: "Lasse Bickmann (EAALBIC)",
-        sortable_name: "Bickmann, Lasse"
-    },
-    {
         avatar_url: "https://data.efif.dk/Image/StudSys.ashx?cmd=EAA&key=ccd6629f-904f-4356-b4c3-44d5d52cdc08&Username=eaathb@students.eaaa.dk",
         created_at: "2021-08-05T00:57:51+02:00",
         email: "eaathb@students.eaaa.dk",
@@ -76,17 +65,6 @@ let users = [
         name: "Barbora Byrtusová",
         short_name: "Barbora Byrtusová (EAABABY)",
         sortable_name: "Byrtusová, Barbora"
-    },
-    {
-        avatar_url: "https://eaaa.instructure.com/images/thumbnails/649049/1EeRFv7jyMzdBXE1mMXSf9dAiRRPVSWAbcBl60Ou",
-        created_at: "2018-09-06T02:23:57+02:00",
-        email: "race@eaaa.dk",
-        enrollment_type: "TeacherEnrollment",
-        id: "14427",
-        login_id: "race@eaaa.dk",
-        name: "Rasmus Cederdorff",
-        short_name: "Rasmus Cederdorff (adjunkt – race@eaaa.dk)",
-        sortable_name: "Cederdorff, Rasmus"
     }];
 
 function appendUsers(users) {
