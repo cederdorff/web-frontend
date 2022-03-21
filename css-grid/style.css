@@ -49,6 +49,20 @@ a {
   color: var(--green);
 }
 
+button {
+  font-weight: 200;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  padding: 12px 15px;
+  font-size: 1em;
+  border-radius: 0;
+  color: var(--text-color-light);
+  background-color: var(--green);
+  width: 100%;
+  max-width: 350px;
+}
+
 /* ---------- grid styling ---------- */
 
 .grid {
