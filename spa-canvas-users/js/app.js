@@ -6,23 +6,30 @@ let _selectedUserId;
 
 /* -------------------------------------- */
 
+async function initApp() {
+    await fetchUsers();
+    appendUsers(_users);
+}
+
+initApp();
+
 async function fetchUsers() {
-    const url = "https://cederdorff.github.io/mdu-frontend/canvas-users/data/users.json";
+    const url = "https://cederdorff.github.io/web-frontend/canvas-users/data.json";
     const response = await fetch(url);
     const data = await response.json();
+    console.log(data);
     _users = data;
 }
 
 function appendUsers(usersArray) {
     let html = "";
     for (const userObject of usersArray) {
-        html += /*html*/`
+        html += /*html*/ `
             <article>
-                <img src="${userObject.avatarUrl}" onclick="showDetailView('${userObject.id}')">
+                <img src="${userObject.avatar_url}" onclick="showDetailView('${userObject.id}')">
                 <h2>${userObject.name}</h2>
                 <a href="mailto:${userObject.email}">${userObject.email}</a>
-                <p>${userObject.enrollmentType.replace("Enrollment", "")}</p>
-                <p>Course: ${userObject.course}</p>
+                <p>Enrollment: ${userObject.enrollment_type}</p>
                 <button onclick="selectUser('${userObject.id}')">Update</button>
                 <button onclick="deleteUser('${userObject.id}')">Delete</button>
             </article>
@@ -48,33 +55,21 @@ function sortByName() {
 
 function sortBySortableName() {
     _users.sort((user1, user2) => {
-        return user1.sortableName.localeCompare(user2.sortableName);
+        return user1.sortable_name.localeCompare(user2.sortable_name);
     });
     appendUsers(_users);
 }
 
 function filterByEnrollment(type) {
-    resetFilterByCourse();
     if (type === "all") {
         appendUsers(_users);
     } else {
-        const results = _users.filter(user => user.enrollmentType === type);
-        appendUsers(results)
-    }
-}
-
-function filterByCourse(course) {
-    resetFilterByEnrollment();
-    if (course === "all") {
-        appendUsers(_users);
-    } else {
-        const results = _users.filter(user => user.course === course);
+        const results = _users.filter(user => user.enrollment_type === type);
         appendUsers(results);
     }
 }
 
 function search(value) {
-    resetFilterByCourse();
     resetFilterByEnrollment();
     value = value.toLowerCase();
     const results = _users.filter(user => {
@@ -86,37 +81,29 @@ function search(value) {
     appendUsers(results);
 }
 
-function resetFilterByCourse() {
-    document.querySelector("#filterByCourse").value = "all";
-}
-
 function resetFilterByEnrollment() {
     document.querySelector("#filterByEnrollment").value = "all";
 }
 
 function addNewUser() {
     const name = document.querySelector("#name").value;
-    const course = document.querySelector("#course").value;
     const mail = document.querySelector("#mail").value;
     const enrollmentType = document.querySelector("#enrollmentType").value;
     const img = document.querySelector("#img").value;
     const id = Date.now(); // dummy generated user id
 
     const newUser = {
-        avatarUrl: img,
-        course: course,
-        createdAt: id,
+        avatar_url: img,
         email: mail,
-        enrollmentType: enrollmentType,
+        enrollment_type: enrollmentType,
         id: id,
-        loginId: mail,
         name: name,
-        sortableName: generateSortableName(name)
+        sortable_name: generateSortableName(name)
     };
 
     _users.push(newUser);
     appendUsers(_users);
-    navigateTo("users");
+    navigateTo("#/");
 }
 
 function generateSortableName(name) {
@@ -130,24 +117,21 @@ function selectUser(id) {
     _selectedUserId = id;
     const userToEdit = _users.find(user => user.id == id);
     document.querySelector("#nameEdit").value = userToEdit.name;
-    document.querySelector("#courseEdit").value = userToEdit.course;
     document.querySelector("#mailEdit").value = userToEdit.email;
-    document.querySelector("#enrollmentTypeEdit").value = userToEdit.enrollmentType;
-    document.querySelector("#imgEdit").value = userToEdit.avatarUrl;
-    navigateTo("update");
+    document.querySelector("#enrollmentTypeEdit").value = userToEdit.enrollment_type;
+    document.querySelector("#imgEdit").value = userToEdit.avatar_url;
+    navigateTo("#/update");
 }
 
 function updateUser() {
     const userToEdit = _users.find(user => user.id == _selectedUserId);
     userToEdit.name = document.querySelector("#nameEdit").value;
-    userToEdit.course = document.querySelector("#courseEdit").value;
     userToEdit.email = document.querySelector("#mailEdit").value;
-    userToEdit.loginId = userToEdit.email;
-    userToEdit.enrollmentType = document.querySelector("#enrollmentTypeEdit").value;
-    userToEdit.avatarUrl = document.querySelector("#imgEdit").value;
-    userToEdit.sortableName = generateSortableName(userToEdit.name);
+    userToEdit.enrollment_type = document.querySelector("#enrollmentTypeEdit").value;
+    userToEdit.avatar_url = document.querySelector("#imgEdit").value;
+    userToEdit.sortable_name = generateSortableName(userToEdit.name);
     appendUsers(_users);
-    navigateTo("users");
+    navigateTo("#/");
 }
 
 function deleteUser(id) {
@@ -161,23 +145,17 @@ function deleteUser(id) {
 function showDetailView(id) {
     const userObject = _users.find(user => user.id == id);
     document.querySelector("#detailView h2").innerHTML = userObject.name;
-    document.querySelector("#detailViewContainer").innerHTML = /*html*/`
-        <img src="${userObject.avatarUrl}" onclick="showDetailView('${userObject.id}')">
+    document.querySelector("#detailViewContainer").innerHTML = /*html*/ `
+        <img src="${userObject.avatar_url}" onclick="showDetailView('${userObject.id}')">
         <article>
             <h2>${userObject.name}</h2>
-            <p>Sortable name: ${userObject.sortableName}</p>
+            <p>Sortable name: ${userObject.sortable_name}</p>
             <a href="mailto:${userObject.email}">${userObject.email}</a>
-            <p>${userObject.enrollmentType.replace("Enrollment", "")}</p>
-            <p>Course: ${userObject.course}</p>
+            <p>${userObject.enrollment_type}</p>
             <p>User id: ${userObject.id}</p>
         </article>
     `;
-    navigateTo("detailView");
-}
-
-
-if (!_selectedUserId) {
-    navigateTo("users");
+    navigateTo("#/user");
 }
 
 function showRandomUser() {
@@ -185,12 +163,3 @@ function showRandomUser() {
     console.log(randomUser);
     showDetailView(randomUser.id);
 }
-
-// ========== INIT APP ==========
-
-async function initApp() {
-    await fetchUsers();
-    appendUsers(_users);
-}
-
-initApp();
