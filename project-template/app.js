@@ -1,5 +1,3 @@
-"use strict"; // to enable strict mode and modern JavaScript functionality
-
 // declaring a variable with a value
 let message = "Hi Students";
 
