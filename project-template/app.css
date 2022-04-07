@@ -159,6 +159,7 @@ a {
     grid-template-columns: 1fr;
     padding: 1em;
     gap: 1em;
+    background-color: var(--light-grey);
 }
 
 @media (min-width: 600px) {
@@ -221,7 +222,6 @@ input {
     box-sizing: border-box;
     display: block;
     background: var(--white);
-    border: 0;
 }
 
 form select {
