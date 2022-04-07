@@ -15,12 +15,10 @@ function appendPosts(posts) {
             <p>${post.body}</p>
         </article>
     `).join("");
-
     document.querySelector("#content").innerHTML = mappedHtml
 }
 
 function search(value) {
-    console.log(value);
     value = value.toLowerCase();
     const result = _posts.filter(post => post.title.toLowerCase().includes(value));
     appendPosts(result);
