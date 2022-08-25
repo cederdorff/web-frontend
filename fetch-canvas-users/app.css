@@ -186,12 +186,6 @@ a {
 
 .grid-container > article img {
     width: 100%;
-    max-width: 250px;
-    height: auto;
-}
-
-.grid-container > article img {
-    width: 100%;
     max-width: 150px;
     height: auto;
     border-radius: 50%;
