@@ -1,0 +1,28 @@
+/* ---------- root variables ---------- */
+:root {
+    --green: rgb(38, 76, 89);
+    --green-opacity: rgba(38, 76, 89, 0.2);
+    --light-green: rgb(172, 198, 201);
+    --light-grey: #f1f1f4;
+    --text-color-light: #f1f1f1;
+    --text-color-dark: #333;
+    --white: #fff;
+    --font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --text-color-out-of-stock: rgb(89, 38, 38);
+    --text-color-in-stock: rgb(172, 198, 201);
+}
+
+/* ---------- general styling ---------- */
+html,
+body {
+    color: var(--text-color-dark);
+    font-family: var(--font-family);
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* ---------- header styling ---------- */
+
+/* ---------- grid container styling ---------- */
