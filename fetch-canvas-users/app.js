@@ -1,7 +1,8 @@
 let users = [];
 
 async function getUsers() {
-    const data = await fetch("../data/wu-e22a.json").then(res => res.json());
+    const response = await fetch("https://raw.githubusercontent.com/cederdorff/web-frontend/main/data/wu-e22a.json");
+    const data = await response.json();
     return data;
 }
 
