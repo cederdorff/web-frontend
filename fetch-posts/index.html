@@ -13,9 +13,11 @@
   <body>
     <header>
       <h1>Fetch Posts</h1>
+      <input type="search" onkeyup="search(this.value)" placeholder="Search" />
     </header>
-    <input type="search" onkeyup="search(this.value)" />
-    <section id="content" class="grid-container"></section>
+    <main>
+      <section id="content" class="grid-container"></section>
+    </main>
     <!-- main js file -->
     <script src="app.js"></script>
   </body>
