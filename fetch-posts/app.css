@@ -46,91 +46,6 @@ a {
   cursor: pointer;
 }
 
-/* ---------- topbar styling ---------- */
-.topbar {
-  background-color: var(--green);
-  color: var(--text-color-light);
-  padding: 13.5px;
-  text-transform: uppercase;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 9999;
-}
-
-.topbar h2 {
-  margin: 0;
-  font-weight: 400;
-}
-
-.topbar a {
-  text-decoration: none;
-  color: var(--text-color-light);
-  position: absolute;
-  top: 20px;
-}
-
-.topbar a.left {
-  left: 20px;
-}
-
-.topbar a.right {
-  right: 20px;
-}
-
-/* ---------- tabbar styling ---------- */
-.tabbar {
-  background-color: var(--green);
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 9999;
-}
-
-/* Style the links inside the navigation bar */
-.tabbar a {
-  display: inline-block;
-  color: var(--text-color-light);
-  text-align: center;
-  padding: 20px 16px;
-  text-decoration: none;
-  font-size: 0.8em;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-/* Change the color of links on hover */
-.tabbar a:hover {
-  background-color: var(--light-grey);
-  color: var(--text-color-dark);
-}
-
-/* Add a color to the active/current link */
-.tabbar a.active {
-  background-color: var(--light-green);
-  color: var(--green);
-}
-
-/* ---------- page styling ---------- */
-.page {
-  display: none;
-  /*min heigh is screen heigh minus height of tab and top bar */
-  min-height: calc(100vh - 110px);
-  background: var(--light-grey);
-  animation: fadeIn 0.4s;
-  /* padding equals height of tabbar and topbar */
-  padding: 55px 0;
-}
-
-/* ---------- logo styling ---------- */
-.logo {
-  margin: 2em auto;
-  width: 100%;
-  max-width: 300px;
-}
-
 /* ---------- animations ---------- */
 /* fade in */
 @keyframes fadeIn {
@@ -151,6 +66,29 @@ a {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* ---------- header styling ---------- */
+header {
+  background-color: var(--green);
+  color: var(--text-color-light);
+  padding: 13.5px;
+  text-transform: uppercase;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
+
+/* ---------- main (page) styling ---------- */
+main {
+  /*min heigh is screen heigh minus height of tab and top bar */
+  min-height: calc(100vh - 164px);
+  background: var(--light-grey);
+  animation: fadeIn 0.4s;
+  /* padding equals height of tabbar and topbar */
+  padding: 164px 0 0;
 }
 
 /* ---------- grid container styling ---------- */
@@ -178,8 +116,7 @@ a {
   text-align: center;
   padding: 2em 1em;
   background-color: var(--white);
-  transition: 0.3s;
-  cursor: pointer;
+  transition: 0.5s;
 }
 
 .grid-container > article:hover {
@@ -224,125 +161,12 @@ input {
   background: var(--white);
 }
 
+header input {
+  border: none;
+}
+
 form select {
   width: 100%;
   background-color: var(--light-green);
   color: var(--text-color-dark);
-}
-
-/* ---------- loader styling ---------- */
-#loader {
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: 9999999999;
-  overflow: hidden;
-  background: var(--loader-background-color);
-  text-align: center;
-}
-
-.spinner {
-  border: 5px solid var(--light-grey);
-  border-radius: 50%;
-  border-top: 5px solid var(--light-green);
-  width: 50px;
-  height: 50px;
-  -webkit-animation: spin 1s linear infinite;
-  /* Safari */
-  animation: spin 1s linear infinite;
-  display: inline-block;
-  vertical-align: middle;
-  position: absolute;
-  margin: auto;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-.hide {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s 0.4s, opacity 0.4s linear;
-}
-
-/* ---------- checkmark styling ---------- */
-
-/* Customize the label (the container) */
-.checkmark-container {
-  display: block;
-  position: relative;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  padding: 1.5em;
-  line-height: 1.5em;
-  margin-left: -25px;
-}
-
-/* Hide the browser's default checkbox */
-.checkmark-container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-/* Create a custom checkbox */
-.checkmark {
-  position: absolute;
-  margin: 0 0 0 1em;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
-}
-
-/* On mouse-over, add a grey background color */
-.checkmark-container:hover input ~ .checkmark {
-  background-color: var(--text-color-light);
-}
-
-/* When the checkbox is checked, add a blue background */
-.checkmark-container input:checked ~ .checkmark {
-  background-color: var(--green);
-}
-
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-/* Show the checkmark when checked */
-.checkmark-container input:checked ~ .checkmark:after {
-  display: block;
-}
-
-/* Style the checkmark/indicator */
-.checkmark-container .checkmark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid var(--white);
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-/* ---------- custom select styling ---------- */
-select {
-  background-color: var(--green);
-  border: none;
-  color: var(--text-color-light);
-  padding: 1em;
-  margin: 1em;
-  max-width: 350px;
 }
