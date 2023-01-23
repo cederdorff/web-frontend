@@ -2,7 +2,7 @@ import Congrats from "./congrats.js";
 import race from "./race.js";
 import WUClass from "./WUClass.js";
 
-function initApp() {
+function initCongrats() {
     const wuClass = new WUClass("WU-E21s", "Favorite Web Dev Class");
     const congrats = new Congrats(`
         Dear Web Developers,
@@ -42,4 +42,4 @@ function initApp() {
     race.codeEveryDay();
 }
 
-initApp();
+initCongrats();
