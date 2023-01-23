@@ -19,19 +19,19 @@ function initCongrats() {
         I'm not lying when I say you made a difference and were a
         part of a great change. Thank you for being you!
 
-        Be proud of your achievements and the survival of 1000s 
-        of slides, bad JavaScript jokes, too many GitHub 
-        repositories, cheesy theme introductions and energized 
-        morning music videos. You made it! 
+        You should all be incredibly proud of yourselves and the
+        accomplishments you have achieved. Also, be proud of the 
+        survival of 1000s of slides, bad JavaScript jokes, too 
+        many GitHub repositories, cheesy theme introductions and 
+        energized morning music videos. You made it! 
 
         Once again, congratulations to each and every one of you.
-        You should all be incredibly proud of yourselves and the
-        accomplishments you have achieved. Remember to celebrate
-        this milestone. And when you are done, celebrate a bit more.
-        You deserve it 🎉  
+        Remember to celebrate this milestone. And when you are 
+        done, celebrate even more. You deserve it 🎉  
 
-        I wish you all the best of luck in the next chapter of your 
-        journey.
+        I wish you all the best of luck in the next chapter of 
+        your journey. The world is waiting for you, and I have 
+        no doubt that you will all go on to do great things.
 
         Thank you 🙏🏼
 
